@@ -4,12 +4,16 @@ html, body {
     margin: auto;
     display: flex;
     flex-wrap: wrap;
-    width: 90%;
+    width: calc(min(90%, 50rem));
 }
 
-h1 {
+.h1 {
     flex-basis: 100%;
     font-family: sans-serif;
+    font-weight: bold;
+    font-size: 24pt;
+    margin-bottom: 1rem;
+    margin-top: 1rem;
 }
 
 #folder-view-head {
@@ -108,14 +112,13 @@ h1 {
 }
 
 #readme {
-    display: flex;
     flex-basis: 100%;
     flex-wrap: wrap;
     border-radius: 0 0 0.5rem 0.5rem;
     border: 1pt solid black;
     border-top: none;
     font-family: sans-serif;
-    padding: 5pt;
+    padding: 1rem;
 }
 
 #readme-title {
