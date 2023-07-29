@@ -111,6 +111,12 @@ html, body {
     flex-wrap: nowrap;
 }
 
+.file-size {
+    flex: 0.6;
+    text-align: right;
+    flex-wrap: nowrap;
+}
+
 #readme {
     flex-basis: 100%;
     flex-wrap: wrap;

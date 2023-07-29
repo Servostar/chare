@@ -5,7 +5,7 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>CDN</title>
     <link rel="stylesheet" type="text/css" href="master.css">
 </head>
 <body>
@@ -52,6 +52,14 @@
         return $nice_interval;
     }
 
+    function human_filesize( $file ) {
+        $bytes = filesize( $file );
+        $decimals = 1;
+        $factor = floor( ( strlen($bytes) - 1 ) / 3 );
+        if ( $factor > 0 ) $sz = 'KMGT';
+        return sprintf( "%.{$decimals}f", $bytes / pow( 1024, $factor ) ) . @$sz[$factor - 1] . 'B';
+    }
+
     $dir = '.';
     $files = scandir($dir);
     usort($files, function($a, $b) use ($dir) {
@@ -71,15 +79,18 @@
             continue;
 
         $date = get_file_change_time($file);
+        $size = human_filesize($file);
 
         if (is_dir($file)) {
             echo '<a class="folder-view-item folder-icon" href="#!">
                             <div class="file-name">'.$file.'</div>
+                            <div class="file-size">'.$size.'</div>
                             <div class="file-added">'.$date.'</div>
                         </a>';
         } else {
             echo '<a class="folder-view-item file-icon" href="#!">
                             <div class="file-name">'.$file.'</div>
+                            <div class="file-size">'.$size.'</div>
                             <div class="file-added">'.$date.'</div>
                         </a>';
 
@@ -108,7 +119,5 @@
             }
         }
     ?>
-
-
 </body>
 </html>
