@@ -75,6 +75,39 @@
     }
     ?>
 
+    <div id="stats-group">
+        <?php
+        $file_count = 0;
+        $folder_count = 0;
+        $total_size = 0;
+
+        $dir = '.';
+        $files = scandir($dir);
+        foreach ($files as $file) {
+            // ignore the current directory
+            if ($file == '.')
+                continue;
+
+            if (is_dir($file)) {
+                $folder_count ++;
+            } else {
+                $file_count ++;
+            }
+
+            $total_size += filesize($file);
+        }
+
+        $decimals = 1;
+        $factor = floor((strlen($total_size) - 1) / 3);
+        if ($factor > 0) $sz = 'KMGT';
+        $human_size = sprintf("%.{$decimals}f", $total_size / pow(1024, $factor)) . @$sz[$factor - 1] . 'B';
+
+        echo '<div id="folder-count">'.$folder_count.' folder</div>
+            <div id="file-count">'.$file_count.' files</div>
+            <div id="file-size-total">'.$human_size.' </div>';
+        ?>
+    </div>
+
     <div id="folder-path">
         <?php
         echo '<b>Path</b>&nbsp;'.substr( $_SERVER['REQUEST_URI'], 1 );

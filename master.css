@@ -171,3 +171,28 @@ pre {
 #powered-by {
     padding: 4pt;
 }
+
+#stats-group {
+    margin-top: 1rem;
+    flex-basis: 100%;
+    flex-wrap: nowrap;
+    border-radius: 0.5rem;
+    border: 1pt solid #c4c4c4;
+    padding: 0.5rem;
+    display: flex;
+}
+
+#folder-count {
+    text-align: center;
+    flex: 0.3333;
+}
+
+#file-count {
+    text-align: center;
+    flex: 0.3333;
+}
+
+#file-size-total {
+    text-align: center;
+    flex: 0.3333;
+}
