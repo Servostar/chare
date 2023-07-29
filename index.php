@@ -20,12 +20,37 @@
     </div>
 </div>
 
-<div id="folder-path">/path/to/folder</div>
+<div id="folder-path">
+    <?php
+    echo $_SERVER['REQUEST_URI'];
+    ?>
+</div>
 <div id="folder-view">
     <?php
     require __DIR__ . '/vendor/autoload.php';
     use League\CommonMark\CommonMarkConverter;
     use League\CommonMark\Exception\CommonMarkException;
+
+    function get_file_change_time($file) {
+        $timestamp = filectime($file);
+        $current_time = new DateTime();
+        $passed_time = new DateTime(date('Y-m-d H:i:s', $timestamp));
+        $interval = $current_time->diff($passed_time);
+
+        if ($interval->y > 0) {
+            $nice_interval = $interval->y." year(s) ago";
+        } else if ($interval->days > 0) {
+            $nice_interval = $interval->days." day(s) ago";
+        } else if ($interval->h > 0) {
+            $nice_interval = $interval->h." hour(s) ago";
+        } else if ($interval->m > 0) {
+            $nice_interval = $interval->m." minute(s) ago";
+        } else {
+            $nice_interval = "seconds ago";
+        }
+
+        return $nice_interval;
+    }
 
     $dir = '.';
     $files = scandir($dir);
@@ -45,15 +70,17 @@
         if ($file == '.')
             continue;
 
+        $date = get_file_change_time($file);
+
         if (is_dir($file)) {
             echo '<a class="folder-view-item folder-icon" href="#!">
                             <div class="file-name">'.$file.'</div>
-                            <div class="file-added">date added</div>
+                            <div class="file-added">'.$date.'</div>
                         </a>';
         } else {
             echo '<a class="folder-view-item file-icon" href="#!">
                             <div class="file-name">'.$file.'</div>
-                            <div class="file-added">date added</div>
+                            <div class="file-added">'.$date.'</div>
                         </a>';
 
             if (preg_match('/readme(\.(md|txt))?/i', $file)) {
