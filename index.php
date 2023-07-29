@@ -19,7 +19,7 @@
     <div class="h1">CDN at teridax.de</div>
 
     <div id="folder-view-head">
-        <div id="last-update-time">last updated</div>
+        <div id="last-update-time">placeholder text</div>
         <div id="download-group">
             <div id="download-type">ZIP</div>
             <form method="post" action="">
@@ -78,7 +78,8 @@
     <div id="stats-group">
         <?php
         $file_count = 0;
-        $folder_count = 0;
+        // start at -1 so that when counting the top folder (..) we get a total count of 0
+        $folder_count = -1;
         $total_size = 0;
 
         $dir = '.';

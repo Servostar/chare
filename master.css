@@ -161,7 +161,8 @@ pre {
 #footer {
     width: 100%;
     border-top: 1pt solid lightgray;
-    position: absolute;
+    background: white;
+    position: fixed;
     bottom: 0;
 
     text-align: center;
