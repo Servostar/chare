@@ -1,0 +1,143 @@
+
+html, body {
+    padding: 0;
+    margin: auto;
+    display: flex;
+    flex-wrap: wrap;
+    width: 90%;
+}
+
+h1 {
+    flex-basis: 100%;
+    font-family: sans-serif;
+}
+
+#folder-view-head {
+    display: flex;
+    flex-wrap: nowrap;
+    flex: 1;
+}
+
+#last-update-time {
+    flex-grow: 1;
+    margin: auto;
+}
+
+#download-group {
+    display: flex;
+    flex-wrap: nowrap;
+    flex: 0;
+}
+
+#download-type {
+    background: greenyellow;
+    padding: 2pt;
+    border-radius: 0.5rem 0 0 0.5rem;
+    border: 1pt solid black;
+}
+
+#btn-download {
+    border-radius: 0 0.5rem 0.5rem 0;
+    border: 1pt solid black;
+    border-left: none;
+    padding: 2pt 2rem 2pt 2pt;
+}
+
+#folder-view {
+    display: flex;
+    flex-basis: 100%;
+    flex-wrap: wrap;
+    border-radius: 0 0 0.5rem 0.5rem;
+    border: 1pt solid black;
+    border-top: none;
+    font-family: sans-serif;
+}
+
+#folder-path {
+    display: flex;
+    flex-basis: 100%;
+    flex-wrap: wrap;
+    border-radius: 0.5rem 0.5rem 0 0;
+    border: 1pt solid black;
+    margin-top: 1rem;
+    padding: 0.5rem;
+    font-family: sans-serif;
+    background: lightgray;
+}
+
+.folder-view-item {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-basis: 100%;
+    text-decoration: none;
+    color: black;
+    padding: 5pt;
+    border-bottom: 1pt solid gray;
+}
+
+.folder-icon::before {
+    content: "";
+    display: inline-block;
+    background-image: url("https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fpluspng.com%2Fimg-png%2Ffolder-png-folder-icon-1600.png&f=1&nofb=1&ipt=043be1c8a895d540431060ee3349f1d3161cd2668320591424572fe8dac4c552&ipo=images");
+    background-size: cover;
+    width: 1rem;
+    height: 1rem;
+    margin-right: 1rem;
+    margin-left: 0.5rem;
+}
+
+.file-icon::before {
+    content: "";
+    display: inline-block;
+    background-image: url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ficon-library.com%2Fimages%2Ficon-file%2Ficon-file-29.jpg&f=1&nofb=1&ipt=fc5c465694ba3f4d88fee35b81fde108be9f472a3d094ce18e960d5854c22c1b&ipo=images");
+    background-size: cover;
+    width: 1rem;
+    height: 1rem;
+    margin-right: 1rem;
+    margin-left: 0.5rem;
+}
+
+.file-name {
+    flex: 1;
+}
+
+.file-added {
+    flex: 0.7;
+    text-align: right;
+    flex-wrap: nowrap;
+}
+
+#readme {
+    display: flex;
+    flex-basis: 100%;
+    flex-wrap: wrap;
+    border-radius: 0 0 0.5rem 0.5rem;
+    border: 1pt solid black;
+    border-top: none;
+    font-family: sans-serif;
+    padding: 5pt;
+}
+
+#readme-title {
+    display: flex;
+    flex-basis: 100%;
+    flex-wrap: wrap;
+    border-radius: 0.5rem 0.5rem 0 0;
+    border: 1pt solid black;
+    margin-top: 1rem;
+    padding: 0.5rem;
+    font-family: sans-serif;
+    background: lightgray;
+}
+
+#js-not-allowed {
+    flex-basis: 100%;
+    text-align: center;
+    font-family: sans-serif;
+    font-size: 16pt;
+    border-radius: 0.5rem;
+    border: 1pt solid red;
+    background: rgba(255, 0, 0, 0.07);
+    padding: 0.5rem;
+    margin: 1rem;
+}
