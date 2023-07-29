@@ -1,6 +1,10 @@
 
 html, body {
     padding: 0;
+    margin: 0;
+}
+
+#content {
     margin: auto;
     display: flex;
     flex-wrap: wrap;
@@ -44,7 +48,10 @@ html, body {
     border-radius: 0 0.5rem 0.5rem 0;
     border: 1pt solid #888888;
     border-left: none;
-    padding: 2pt 2rem 2pt 2pt;
+    padding: 2pt 2rem 2pt 8pt;
+    height: 100%;
+    box-sizing: border-box;
+    font-size: 1rem;
 }
 
 #folder-view {
@@ -62,11 +69,11 @@ html, body {
     flex-basis: 100%;
     flex-wrap: wrap;
     border-radius: 0.5rem 0.5rem 0 0;
-    border: 1pt solid #c4c4c4;
+    border: 1pt solid rgba(100, 149, 237, 0.5);
     border-bottom: none;
     margin-top: 1rem;
     padding: 0.5rem;
-    background: #f3f3f3;
+    background: rgba(100, 149, 237, 0.15);
 }
 
 .folder-view-item {
@@ -77,6 +84,10 @@ html, body {
     color: black;
     padding: 5pt;
     border-top: 1pt solid #c4c4c4;
+}
+
+.folder-view-item:hover {
+    background: #f3f3f3;
 }
 
 .folder-icon::before {
@@ -103,18 +114,21 @@ html, body {
 
 .file-name {
     flex: 1;
+    color: rgba(0, 0, 255, 0.71);
 }
 
 .file-added {
     flex: 0.7;
     text-align: right;
     flex-wrap: nowrap;
+    color: #4d4d4d;
 }
 
 .file-size {
     flex: 0.6;
     text-align: right;
     flex-wrap: nowrap;
+    color: #4d4d4d;
 }
 
 #readme {
@@ -135,15 +149,25 @@ html, body {
     margin-top: 1rem;
     padding: 0.5rem;
     background: #f3f3f3;
+    font-weight: bold;
 }
 
-#js-not-allowed {
-    flex-basis: 100%;
-    text-align: center;
-    font-size: 16pt;
+pre {
+    background: #dadada;
     border-radius: 0.5rem;
-    border: 1pt solid red;
-    background: rgba(255, 0, 0, 0.07);
     padding: 0.5rem;
-    margin: 1rem;
+}
+
+#footer {
+    width: 100%;
+    border-top: 1pt solid lightgray;
+    position: absolute;
+    bottom: 0;
+
+    text-align: center;
+    font-family: sans-serif;
+}
+
+#powered-by {
+    padding: 4pt;
 }
