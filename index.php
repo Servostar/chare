@@ -82,7 +82,7 @@
         $folder_count = -1;
         $total_size = 0;
 
-        $dir = '.';
+        $dir = '/var/share'.$_SERVER['REQUEST_URI'];
         $files = scandir($dir);
         foreach ($files as $file) {
             // ignore the current directory
@@ -152,7 +152,7 @@
             return sprintf("%.{$decimals}f", $bytes / pow(1024, $factor)) . @$sz[$factor - 1] . 'B';
         }
 
-        $dir = '.';
+        $dir = '/var/share'.$_SERVER['REQUEST_URI'];
         $files = scandir($dir);
         usort($files, function ($a, $b) use ($dir) {
             $aIsDir = is_dir($dir . DIRECTORY_SEPARATOR . $a);
@@ -174,13 +174,13 @@
             $size = human_filesize($file);
 
             if (is_dir($file)) {
-                echo '<a class="folder-view-item folder-icon" href="./'.$file.'">
+                echo '<a class="folder-view-item folder-icon" href="'.$_SERVER['REQUEST_URI'].$file.'">
                             <div class="file-name">' . $file . '</div>
                             <div class="file-size">' . $size . '</div>
                             <div class="file-added">' . $date . '</div>
                         </a>';
             } else {
-                echo '<a class="folder-view-item file-icon" href="./'.$file.'">
+                echo '<a class="folder-view-item file-icon" href="'.$_SERVER['REQUEST_URI'].$file.'">
                             <div class="file-name">' . $file . '</div>
                             <div class="file-size">' . $size . '</div>
                             <div class="file-added">' . $date . '</div>
