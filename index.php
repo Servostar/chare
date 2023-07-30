@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>
         <?php
-        echo "CDN ".substr( $_SERVER['REQUEST_URI'], 1 );
+        echo "CDN ".$_SERVER['REQUEST_URI'];
         ?>
     </title>
     <link rel="stylesheet" type="text/css" href="master.css">
@@ -28,81 +28,13 @@
         </div>
     </div>
 
-    <?php
-    if(isset($_POST['download-zip'])) {
-        // Create a new ZipArchive object
-        $zip = new ZipArchive();
-
-        // Specify the name of the zip file to be created
-        $zip_file = 'archive.zip';
-
-        // Open the zip file for writing
-        if ($zip->open($zip_file, ZipArchive::CREATE | ZipArchive::OVERWRITE) === TRUE) {
-            // Get the current directory
-            $current_directory = getcwd();
-
-            // Create a recursive directory iterator to iterate through all files and directories in the current directory
-            $files = new RecursiveIteratorIterator(
-                new RecursiveDirectoryIterator($current_directory, RecursiveDirectoryIterator::SKIP_DOTS),
-                RecursiveIteratorIterator::LEAVES_ONLY
-            );
-
-            // Add each file to the zip archive
-            foreach ($files as $file) {
-                if ($file->isFile()) {
-                    $path = $file->getRealPath();
-                    $relative_path = substr($path, strlen($current_directory) + 1);
-                    $zip->addFile($path, $relative_path);
-                }
-            }
-
-            // Close the zip archive
-            $zip->close();
-
-            // Prompt the user to download the zip file
-            header('Content-Type: application/zip');
-            header('Content-Disposition: attachment; filename="' . $zip_file . '"');
-            header('Content-Length: ' . filesize($zip_file));
-            readfile($zip_file);
-
-            // Delete the zip file after it has been downloaded
-            unlink($zip_file);
-
-            exit;
-        } else {
-            echo "Error creating archive.";
-        }
-    }
-    ?>
-
     <div id="stats-group">
         <?php
         $file_count = 0;
         // start at -1 so that when counting the top folder (..) we get a total count of 0
-        $folder_count = -1;
+        $folder_count = 0;
         $total_size = 0;
-
-        $dir = '/var/share'.$_SERVER['REQUEST_URI'];
-        $files = scandir($dir);
-        foreach ($files as $file) {
-            // ignore the current directory
-            if ($file == '.')
-                continue;
-
-            if (is_dir($file)) {
-                $folder_count ++;
-            } else {
-                $file_count ++;
-            }
-
-            $total_size += filesize($file);
-        }
-
-        $decimals = 1;
-        $factor = floor((strlen($total_size) - 1) / 3);
-        if ($factor > 0) $sz = 'KMGT';
-        $human_size = sprintf("%.{$decimals}f", $total_size / pow(1024, $factor)) . @$sz[$factor - 1] . 'B';
-
+        $human_size = "0KB";
         echo '<div id="folder-count">'.$folder_count.' folder</div>
             <div id="file-count">'.$file_count.' files</div>
             <div id="file-size-total">'.$human_size.' </div>';
@@ -111,7 +43,7 @@
 
     <div id="folder-path">
         <?php
-        echo '<b>Path</b>&nbsp;'.substr( $_SERVER['REQUEST_URI'], 1 );
+        echo '<b>Path</b>&nbsp;'.$_SERVER['REQUEST_URI'];
         ?>
     </div>
     <div id="folder-view">
@@ -121,38 +53,23 @@
         use League\CommonMark\CommonMarkConverter;
         use League\CommonMark\Exception\CommonMarkException;
 
-        function get_file_change_time($file)
-        {
-            $timestamp = filectime($file);
-            $current_time = new DateTime();
-            $passed_time = new DateTime(date('Y-m-d H:i:s', $timestamp));
-            $interval = $current_time->diff($passed_time);
+        include_once 'common.php';
 
-            if ($interval->y > 0) {
-                $nice_interval = $interval->y . " year(s) ago";
-            } else if ($interval->days > 0) {
-                $nice_interval = $interval->days . " day(s) ago";
-            } else if ($interval->h > 0) {
-                $nice_interval = $interval->h . " hour(s) ago";
-            } else if ($interval->m > 0) {
-                $nice_interval = $interval->m . " minute(s) ago";
-            } else {
-                $nice_interval = "seconds ago";
-            }
+        $dir = get_current_dir();
 
-            return $nice_interval;
+        // FIXME: https://www.w3docs.com/snippets/php/automatic-download-file.html
+        if (!is_dir($dir)) {
+            echo $dir;
+            $filePath = $dir;
+            $fileName = basename($filePath);
+
+            header('Content-Type: application/octet-stream');
+            header('Content-Disposition: attachment; filename="' . $fileName . '"');
+            header('Content-Length: ' . filesize($filePath));
+
+            readfile($filePath);
         }
 
-        function human_filesize($file)
-        {
-            $bytes = filesize($file);
-            $decimals = 1;
-            $factor = floor((strlen($bytes) - 1) / 3);
-            if ($factor > 0) $sz = 'KMGT';
-            return sprintf("%.{$decimals}f", $bytes / pow(1024, $factor)) . @$sz[$factor - 1] . 'B';
-        }
-
-        $dir = '/var/share'.$_SERVER['REQUEST_URI'];
         $files = scandir($dir);
         usort($files, function ($a, $b) use ($dir) {
             $aIsDir = is_dir($dir . DIRECTORY_SEPARATOR . $a);
@@ -173,14 +90,18 @@
             $date = get_file_change_time($file);
             $size = human_filesize($file);
 
+            // compile the files href path. This must be relative to the
+            // share folder root
+            $target_path = "http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].DIRECTORY_SEPARATOR.$file;
+
             if (is_dir($file)) {
-                echo '<a class="folder-view-item folder-icon" href="'.$_SERVER['REQUEST_URI'].$file.'">
+                echo '<a class="folder-view-item folder-icon" href="'.$target_path.'">
                             <div class="file-name">' . $file . '</div>
                             <div class="file-size">' . $size . '</div>
                             <div class="file-added">' . $date . '</div>
                         </a>';
             } else {
-                echo '<a class="folder-view-item file-icon" href="'.$_SERVER['REQUEST_URI'].$file.'">
+                echo '<a class="folder-view-item file-icon" href="'.$target_path.'">
                             <div class="file-name">' . $file . '</div>
                             <div class="file-size">' . $size . '</div>
                             <div class="file-added">' . $date . '</div>

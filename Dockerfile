@@ -5,11 +5,11 @@ COPY nginx.conf /etc/nginx
 COPY composer.json /var/www/html
 
 # for testing only
-COPY test /var/share/test
+COPY test /var/share
 
 COPY index.php /var/www/html
+COPY common.php /var/www/html
 COPY master.css /var/www/html
 COPY vendor /var/www/html/vendor
-#RUN mkdir /var/share
 WORKDIR "/var/www/html"
 CMD ["/start.sh"]
