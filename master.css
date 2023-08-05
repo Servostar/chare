@@ -2,20 +2,60 @@
 html, body {
     padding: 0;
     margin: 0;
+
+    --border-color: #adadad;
+    --highlight-background-color: #efefef;
+    --subtile-font-color: #4f4f4f;
+    --background-color: #ffffff;
+    --font-color: black;
+
+    background: var(--background-color);
+
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
-#content {
-    margin: auto;
-    display: flex;
-    flex-wrap: wrap;
-    width: calc(min(90%, 50rem));
+#header {
     font-family: sans-serif;
+    background: var(--highlight-background-color);
+    border-bottom: 1pt solid var(--border-color);
+    margin-bottom: 2rem;
+}
+
+#links {
+    width: 100%;
+    display: flex;
+}
+
+.subtitle {
+    flex: 0.25;
+    padding-left: 4rem;
+    padding-bottom: 1rem;
+}
+
+.link {
+    text-decoration: none;
+    color: var(--subtile-font-color);
+    border-bottom: 2pt solid rgba(255, 165, 0, 0.75);
+    margin-left: 1rem;
+    margin-right: 1rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    text-align: center;
 }
 
 .h1 {
-    flex-basis: 100%;
+    padding-left: 4rem;
     font-weight: bold;
     font-size: 24pt;
+    padding-bottom: 1rem;
+    padding-top: 1rem;
+}
+
+.h2 {
+    font-weight: bold;
+    font-size: 18pt;
     margin-bottom: 1rem;
     margin-top: 1rem;
 }
@@ -41,12 +81,12 @@ html, body {
     background: linear-gradient(0, rgb(0, 255, 41) 0%, rgb(170, 255, 185) 100%);
     padding: 2pt 6pt 2pt 6pt;
     border-radius: 0.5rem 0 0 0.5rem;
-    border: 1pt solid #888888;
+    border: 1pt solid var(--border-color);
 }
 
 #btn-download {
     border-radius: 0 0.5rem 0.5rem 0;
-    border: 1pt solid #888888;
+    border: 1pt solid var(--border-color);
     border-left: none;
     padding: 2pt 2rem 2pt 8pt;
     height: 100%;
@@ -59,7 +99,7 @@ html, body {
     flex-basis: 100%;
     flex-wrap: wrap;
     border-radius: 0 0 0.5rem 0.5rem;
-    border: 1pt solid #c4c4c4;
+    border: 1pt solid var(--border-color);
     border-top: none;
     font-family: sans-serif;
 }
@@ -69,11 +109,11 @@ html, body {
     flex-basis: 100%;
     flex-wrap: wrap;
     border-radius: 0.5rem 0.5rem 0 0;
-    border: 1pt solid rgba(100, 149, 237, 0.5);
+    border: 1pt solid var(--border-color);
     border-bottom: none;
     margin-top: 1rem;
     padding: 0.5rem;
-    background: rgba(100, 149, 237, 0.15);
+    background: var(--highlight-background-color);
 }
 
 .folder-view-item {
@@ -83,18 +123,55 @@ html, body {
     text-decoration: none;
     color: black;
     padding: 5pt;
-    border-top: 1pt solid #c4c4c4;
+    border-top: 1pt solid var(--border-color);
 }
 
 .folder-view-item:hover {
-    background: #f3f3f3;
+    background: var(--highlight-background-color);
 }
 
 .folder-icon::before {
     content: "";
     display: inline-block;
-    background-image: url("https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fpluspng.com%2Fimg-png%2Ffolder-png-folder-icon-1600.png&f=1&nofb=1&ipt=043be1c8a895d540431060ee3349f1d3161cd2668320591424572fe8dac4c552&ipo=images");
-    background-size: cover;
+    background-image: url("res/folder.svg");
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 1rem;
+    height: 1rem;
+    margin-right: 1rem;
+    margin-left: 0.5rem;
+}
+
+.readme-icon::before {
+    content: "";
+    display: inline-block;
+    background-image: url("res/readme.svg");
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 1rem;
+    height: 1rem;
+    margin-right: 1rem;
+    margin-left: 0.5rem;
+}
+
+.about-icon::before {
+    content: "";
+    display: inline-block;
+    background-image: url("res/about.svg");
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 1rem;
+    height: 1rem;
+    margin-right: 1rem;
+    margin-left: 0.5rem;
+}
+
+.license-icon::before {
+    content: "";
+    display: inline-block;
+    background-image: url("res/license.svg");
+    background-size: contain;
+    background-repeat: no-repeat;
     width: 1rem;
     height: 1rem;
     margin-right: 1rem;
@@ -104,38 +181,75 @@ html, body {
 .file-icon::before {
     content: "";
     display: inline-block;
-    background-image: url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ficon-library.com%2Fimages%2Ficon-file%2Ficon-file-29.jpg&f=1&nofb=1&ipt=fc5c465694ba3f4d88fee35b81fde108be9f472a3d094ce18e960d5854c22c1b&ipo=images");
-    background-size: cover;
+    background-image: url("res/file.svg");
+    background-size: contain;
+    background-repeat: no-repeat;
     width: 1rem;
     height: 1rem;
     margin-right: 1rem;
     margin-left: 0.5rem;
 }
 
+.home-icon::before {
+    content: "";
+    display: inline-block;
+    background-image: url("res/home.svg");
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 1rem;
+    height: 1rem;
+    margin-right: 1rem;
+    margin-left: 0.5rem;
+}
+
+.legal-icon::before {
+    content: "";
+    display: inline-block;
+    background-image: url("res/legal.svg");
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 1rem;
+    height: 1rem;
+    margin-right: 1rem;
+    margin-left: 0.5rem;
+}
+
+.impressum-icon::before {
+     content: "";
+     display: inline-block;
+     background-image: url("res/impressum.svg");
+     background-size: contain;
+     background-repeat: no-repeat;
+     width: 1rem;
+     height: 1rem;
+     margin-right: 1rem;
+     margin-left: 0.5rem;
+ }
+
 .file-name {
     flex: 1;
-    color: rgba(0, 0, 255, 0.71);
+    color: var(--font-color);
 }
 
 .file-added {
     flex: 0.7;
     text-align: right;
     flex-wrap: nowrap;
-    color: #4d4d4d;
+    color: var(--subtile-font-color);
 }
 
 .file-size {
     flex: 0.6;
     text-align: right;
     flex-wrap: nowrap;
-    color: #4d4d4d;
+    color: var(--subtile-font-color);
 }
 
 #readme {
     flex-basis: 100%;
     flex-wrap: wrap;
     border-radius: 0 0 0.5rem 0.5rem;
-    border: 1pt solid #c4c4c4;
+    border: 1pt solid var(--border-color);
     border-top: none;
     padding: 1rem;
 }
@@ -145,25 +259,25 @@ html, body {
     flex-basis: 100%;
     flex-wrap: wrap;
     border-radius: 0.5rem 0.5rem 0 0;
-    border: 1pt solid #c4c4c4;
+    border: 1pt solid var(--border-color);
     margin-top: 1rem;
     padding: 0.5rem;
-    background: #f3f3f3;
+    background: var(--highlight-background-color);
     font-weight: bold;
 }
 
 pre {
-    background: #dadada;
+    background: var(--highlight-background-color);
     border-radius: 0.5rem;
     padding: 0.5rem;
 }
 
 #footer {
+    flex-shrink: 0;
+    margin-top: 4rem;
     width: 100%;
-    border-top: 1pt solid lightgray;
-    background: white;
-    position: fixed;
-    bottom: 0;
+    border-top: 1pt solid var(--border-color);
+    background: var(--highlight-background-color);
 
     text-align: center;
     font-family: sans-serif;
@@ -178,7 +292,8 @@ pre {
     flex-basis: 100%;
     flex-wrap: nowrap;
     border-radius: 0.5rem;
-    border: 1pt solid #c4c4c4;
+    border: 1pt solid var(--border-color);
+    background: var(--highlight-background-color);
     padding: 0.5rem;
     display: flex;
 }
@@ -196,4 +311,50 @@ pre {
 #file-size-total {
     text-align: center;
     flex: 0.3333;
+}
+
+#two-columns {
+    display: flex;
+    width: calc(min(90%, 65rem));
+    margin: auto;
+    flex: 1;
+    flex-grow: 0;
+}
+
+#content {
+    flex: 75%;
+    display: flex;
+    flex-wrap: wrap;
+    font-family: sans-serif;
+}
+
+#about {
+    font-family: sans-serif;
+    margin-top: 2.5rem;
+    margin-left: 2rem;
+    flex: 25%;
+}
+
+.error {
+    border: 1pt solid red;
+    border-radius: 0.5rem;
+    background: rgba(255, 0, 0, 0.25);
+    padding: 1rem;
+    text-align: center;
+    flex-basis: 100%;
+}
+
+.about-info {
+    color: var(--subtile-font-color);
+    line-height: 2rem;
+    display: block;
+    padding-left: 1rem;
+    text-decoration: none;
+}
+
+#description {
+    word-wrap: anywhere;
+    border-bottom: 1pt solid var(--border-color);
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
 }
