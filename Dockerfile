@@ -11,5 +11,6 @@ COPY php /var/www/html
 COPY master.css /var/www/html
 COPY vendor /var/www/html/vendor
 ENV SHARE_PATH=/var/share
+ENV SERVER_NAME=example.com
 WORKDIR "/var/www/html"
 CMD ["/start.sh"]

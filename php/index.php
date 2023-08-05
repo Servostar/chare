@@ -6,37 +6,46 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>
-        <?php echo $_SERVER['REQUEST_URI'] ?>
+        <?php echo $_ENV['SERVER_NAME'].': '.$_SERVER['REQUEST_URI'] ?>
     </title>
     <link rel="stylesheet" type="text/css" href="../master.css">
 </head>
 <body>
 
-<div id="content">
-
-    <div class="h1">CDN at teridax.de</div>
-
-    <div id="folder-view-head">
-        <div id="last-update-time">placeholder text</div>
-        <div id="download-group">
-            <div id="download-type">ZIP</div>
-            <form method="post" action="">
-                <input id="btn-download" type="submit" name="download-zip" value="Download Zip">
-            </form>
+<div id="header">
+    <div class="h1">CDN @ <?php echo $_ENV['SERVER_NAME'] ?></div>
+    <div class="subtitle">Open Source Content Delivery Platform</div>
+    <div id="links">
+    </div>
+</div>
+<div id="two-columns">
+    <div id="content">
+        <div id="folder-view-head">
+            <div id="last-update-time">shared files</div>
+            <div id="download-group">
+                <div id="download-type">ZIP</div>
+                <form method="post" action="">
+                    <input id="btn-download" type="submit" name="download-zip" value="Download Zip">
+                </form>
+            </div>
         </div>
-    </div>
 
-    <div id="stats-group">
-        <?php include 'statistics.php'; ?>
-    </div>
+        <div id="stats-group">
+            <?php include 'statistics.php'; ?>
+        </div>
 
-    <div id="folder-path">
-        <?php echo $_SERVER['REQUEST_URI'] ?>
+        <div id="folder-path">
+            <?php echo $_SERVER['REQUEST_URI'] ?>
+        </div>
+        <div id="folder-view">
+            <?php include 'explorer.php'; ?>
+        </div>
+        <?php include 'readme.php'; ?>
     </div>
-    <div id="folder-view">
-        <?php include 'explorer.php'; ?>
+    <div id="about">
+        <div class="h2">About</div>
+        <?php include 'about.php' ?>
     </div>
-    <?php include 'readme.php'; ?>
 </div>
 
 <div id="footer">

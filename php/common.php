@@ -47,3 +47,23 @@ function filesize_as_str($file): string
     }
     return "unknown";
 }
+
+function pretty_datetime_diff($past): string
+{
+    $now = new DateTime();
+    $diff = $now->diff(new DateTime($past));
+
+    if ($diff->y > 0) {
+        return $diff->y." year(s) ago";
+    }
+    if ($diff->m > 0) {
+        return $diff->m." month(s) ago";
+    }
+    if ($diff->d > 0) {
+        return $diff->d." day(s) ago";
+    }
+    if ($diff->i > 0) {
+        return $diff->i." minutes(s) ago";
+    }
+    return "seconds ago";
+}

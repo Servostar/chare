@@ -7,14 +7,29 @@ function create_file_html($file): void
     $filesize = filesize_as_str($file);
     $fileName = basename($file);
 
-    $lastAccessTime = fileatime($file);
-    $lastAccessTime = date('Y-m-d H:i:s', $lastAccessTime);
+    $lastAccessTime = get_last_accesstime($file);
+
+    $target = $_SERVER['REQUEST_URI'].DIRECTORY_SEPARATOR.$fileName;
+    $sanitized_uri = filter_var($target, FILTER_SANITIZE_URL);
 
     if(is_dir($file)) {
-        format_file_entry_html($file, $fileName, $filesize, $lastAccessTime, "folder-icon");
+        format_file_entry_html($sanitized_uri, $fileName, $filesize, $lastAccessTime, "folder-icon");
     } else {
-        format_file_entry_html($file, $fileName, $filesize, $lastAccessTime, "file-icon");
+        format_file_entry_html($sanitized_uri, $fileName, $filesize, $lastAccessTime, "file-icon");
     }
+}
+
+function get_last_accesstime($file): string
+{
+    $lastAccessTime = filemtime($file);
+    if ($lastAccessTime === false || $lastAccessTime === 0) {
+        $lastAccessTime = filectime($file);
+        if ($lastAccessTime === false) {
+            return "unknown";
+        }
+    }
+    $lastAccessTime = date('Y-m-d H:i:s', $lastAccessTime);
+    return pretty_datetime_diff($lastAccessTime);
 }
 
 function format_file_entry_html($target_path, $filename, $filesize, $editdate, $iconclass): void
@@ -31,6 +46,10 @@ if ($dir === false) {
     return;
 }
 
+$GLOBALS["description"] = "NODESCRIPTION";
+$GLOBALS["readme"] = "NOREADME";
+$GLOBALS["license"] = "NOLICENSE";
+
 $entries = scandir($dir);
 sort($entries);
 usort($entries, function($a, $b) use ($dir) {
@@ -44,11 +63,23 @@ usort($entries, function($a, $b) use ($dir) {
 });
 foreach ($entries as $entry) {
 
-    if (basename($entry) == "README.md") {
-        $fileHandle = fopen($entry, 'r');
-        $GLOBALS["description"] = fread($fileHandle, filesize($entry));
-        fclose($fileHandle);
+    if ($entry == '.') {
+        continue;
     }
 
-    create_file_html($entry);
+    $file = current_dir().DIRECTORY_SEPARATOR.$entry;
+
+    if (preg_match('/^readme(\.md)?$/i', $entry)) {
+        $GLOBALS["readme"] = $file;
+    }
+
+    if (preg_match('/^license(\.txt)?$/i', $entry)) {
+        $GLOBALS["license"] = $file;
+    }
+
+    if (preg_match('/^about(\.txt)?$/i', $entry)) {
+        $GLOBALS["description"] = $file;
+    }
+
+    create_file_html($file);
 }
