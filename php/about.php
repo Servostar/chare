@@ -25,9 +25,9 @@ if ($aboutfile !== "NODESCRIPTION") {
 }
 
 if ($GLOBALS["license"] !== "NOLICENSE") {
-    echo '<a class="about-info" id="info-license" href="'.create_target($GLOBALS["license"]).'">License</a>';
+    echo '<a class="about-info license-icon" id="info-license" href="'.create_target($GLOBALS["license"]).'">License</a>';
 }
 
 if ($GLOBALS["readme"] !== "NOREADME") {
-    echo '<a class="about-info" id="info-readme" href="'.create_target($GLOBALS["readme"]).'">Readme</a>';
+    echo '<a class="about-info readme-icon" id="info-readme" href="'.create_target($GLOBALS["readme"]).'">Readme</a>';
 }

@@ -8,6 +8,7 @@ COPY composer.json /var/www/html
 COPY test /var/share
 
 COPY php /var/www/html
+COPY res /var/www/html/res
 COPY .ignore /srv
 COPY master.css /var/www/html
 COPY vendor /var/www/html/vendor

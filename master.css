@@ -7,6 +7,7 @@ html, body {
     --highlight-background-color: #efefef;
     --subtile-font-color: #4f4f4f;
     --background-color: #ffffff;
+    --font-color: black;
 
     background: var(--background-color);
 
@@ -132,8 +133,45 @@ html, body {
 .folder-icon::before {
     content: "";
     display: inline-block;
-    background-image: url("https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fpluspng.com%2Fimg-png%2Ffolder-png-folder-icon-1600.png&f=1&nofb=1&ipt=043be1c8a895d540431060ee3349f1d3161cd2668320591424572fe8dac4c552&ipo=images");
-    background-size: cover;
+    background-image: url("res/folder.svg");
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 1rem;
+    height: 1rem;
+    margin-right: 1rem;
+    margin-left: 0.5rem;
+}
+
+.readme-icon::before {
+    content: "";
+    display: inline-block;
+    background-image: url("res/readme.svg");
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 1rem;
+    height: 1rem;
+    margin-right: 1rem;
+    margin-left: 0.5rem;
+}
+
+.about-icon::before {
+    content: "";
+    display: inline-block;
+    background-image: url("res/about.svg");
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 1rem;
+    height: 1rem;
+    margin-right: 1rem;
+    margin-left: 0.5rem;
+}
+
+.license-icon::before {
+    content: "";
+    display: inline-block;
+    background-image: url("res/license.svg");
+    background-size: contain;
+    background-repeat: no-repeat;
     width: 1rem;
     height: 1rem;
     margin-right: 1rem;
@@ -143,17 +181,54 @@ html, body {
 .file-icon::before {
     content: "";
     display: inline-block;
-    background-image: url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ficon-library.com%2Fimages%2Ficon-file%2Ficon-file-29.jpg&f=1&nofb=1&ipt=fc5c465694ba3f4d88fee35b81fde108be9f472a3d094ce18e960d5854c22c1b&ipo=images");
-    background-size: cover;
+    background-image: url("res/file.svg");
+    background-size: contain;
+    background-repeat: no-repeat;
     width: 1rem;
     height: 1rem;
     margin-right: 1rem;
     margin-left: 0.5rem;
 }
 
+.home-icon::before {
+    content: "";
+    display: inline-block;
+    background-image: url("res/home.svg");
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 1rem;
+    height: 1rem;
+    margin-right: 1rem;
+    margin-left: 0.5rem;
+}
+
+.legal-icon::before {
+    content: "";
+    display: inline-block;
+    background-image: url("res/legal.svg");
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 1rem;
+    height: 1rem;
+    margin-right: 1rem;
+    margin-left: 0.5rem;
+}
+
+.impressum-icon::before {
+     content: "";
+     display: inline-block;
+     background-image: url("res/impressum.svg");
+     background-size: contain;
+     background-repeat: no-repeat;
+     width: 1rem;
+     height: 1rem;
+     margin-right: 1rem;
+     margin-left: 0.5rem;
+ }
+
 .file-name {
     flex: 1;
-    color: rgba(61, 61, 255, 0.53);
+    color: var(--font-color);
 }
 
 .file-added {
