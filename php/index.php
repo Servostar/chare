@@ -13,9 +13,10 @@
 <body>
 
 <div id="header">
-    <div class="h1">CDN @ <?php echo $_ENV['SERVER_NAME'] ?></div>
-    <div class="subtitle">Open Source Content Delivery Platform</div>
+    <div class="h1">CDN @ <?php echo getenv('SERVER_NAME') ?></div>
     <div id="links">
+        <div class="subtitle">Open Source Content Delivery Platform</div>
+        <?php include 'links.php' ?>
     </div>
 </div>
 <div id="two-columns">

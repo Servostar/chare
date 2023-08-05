@@ -6,7 +6,7 @@
  */
 function __get_share_path(): string
 {
-    $env_path = $_ENV['SHARE_PATH'];
+    $env_path = getenv('SHARE_PATH');
 
     // if the path to the directory to share is invalid
     // we will use the default share path
@@ -66,4 +66,18 @@ function pretty_datetime_diff($past): string
         return $diff->i." minutes(s) ago";
     }
     return "seconds ago";
+}
+
+function read_file_or_default($file, $default): string
+{
+    $text = $default;
+    $fileHandle = fopen($file, 'r');
+    if ($fileHandle !== false) {
+        $text = fread($fileHandle, filesize($file));
+        if ($text === false) {
+            $text = $default;
+        }
+        fclose($fileHandle);
+    }
+    return $text;
 }

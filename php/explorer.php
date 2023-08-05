@@ -50,11 +50,13 @@ $GLOBALS["description"] = "NODESCRIPTION";
 $GLOBALS["readme"] = "NOREADME";
 $GLOBALS["license"] = "NOLICENSE";
 
+$ignore = explode("\n", read_file_or_default("/srv/.ignore", "."));
+
 $entries = scandir($dir);
 sort($entries);
 usort($entries, function($a, $b) use ($dir) {
-    $aIsDir = is_dir($dir . '/' . $a);
-    $bIsDir = is_dir($dir . '/' . $b);
+    $aIsDir = is_dir($dir . DIRECTORY_SEPARATOR . $a);
+    $bIsDir = is_dir($dir . DIRECTORY_SEPARATOR . $b);
     if ($aIsDir == $bIsDir) {
         return strcasecmp($a, $b);
     } else {
@@ -63,7 +65,7 @@ usort($entries, function($a, $b) use ($dir) {
 });
 foreach ($entries as $entry) {
 
-    if ($entry == '.') {
+    if (in_array($entry, $ignore)) {
         continue;
     }
 

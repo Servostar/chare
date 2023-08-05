@@ -23,16 +23,29 @@ html, body {
 }
 
 #links {
+    width: 100%;
+    display: flex;
 }
 
 .subtitle {
+    flex: 0.25;
     padding-left: 4rem;
     padding-bottom: 1rem;
 }
 
+.link {
+    text-decoration: none;
+    color: var(--subtile-font-color);
+    border-bottom: 2pt solid rgba(255, 165, 0, 0.75);
+    margin-left: 1rem;
+    margin-right: 1rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    text-align: center;
+}
+
 .h1 {
     padding-left: 4rem;
-    flex-basis: 100%;
     font-weight: bold;
     font-size: 24pt;
     padding-bottom: 1rem;
@@ -140,7 +153,7 @@ html, body {
 
 .file-name {
     flex: 1;
-    color: rgba(0, 0, 255, 0.71);
+    color: rgba(61, 61, 255, 0.53);
 }
 
 .file-added {
