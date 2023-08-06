@@ -50,7 +50,7 @@ $GLOBALS["description"] = "NODESCRIPTION";
 $GLOBALS["readme"] = "NOREADME";
 $GLOBALS["license"] = "NOLICENSE";
 
-$ignore = explode("\n", read_file_or_default("/srv/.ignore", "."));
+$ignore = explode("\n", read_file_or_default("/srv/config/.ignore", "."));
 
 $entries = scandir($dir);
 sort($entries);
