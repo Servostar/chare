@@ -40,8 +40,8 @@ html, body {
     border-bottom: 2pt solid rgba(255, 165, 0, 0.75);
     margin-left: 1rem;
     margin-right: 1rem;
-    padding-left: 1rem;
-    padding-right: 1rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
     text-align: center;
 }
 
@@ -318,7 +318,7 @@ pre {
     width: calc(min(90%, 65rem));
     margin: auto;
     flex: 1;
-    flex-grow: 0;
+    align-items: flex-start;
 }
 
 #content {
