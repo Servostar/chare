@@ -8,6 +8,7 @@ html, body {
     --subtile-font-color: #4f4f4f;
     --background-color: #ffffff;
     --font-color: black;
+    --accent-color: rgba(255, 165, 0, 0.75);
 
     background: var(--background-color);
 
@@ -24,25 +25,27 @@ html, body {
 }
 
 #links {
-    width: 100%;
+    margin: auto;
+    width: calc(min(90%, 65rem));
     display: flex;
 }
 
 .subtitle {
-    flex: 0.25;
-    padding-left: 4rem;
-    padding-bottom: 1rem;
+    padding-top: 0.25rem;
+    font-size: 1rem;
+    font-weight: normal;
 }
 
 .link {
     text-decoration: none;
     color: var(--subtile-font-color);
-    border-bottom: 2pt solid rgba(255, 165, 0, 0.75);
+    border-bottom: 2pt solid var(--accent-color);
     margin-left: 1rem;
     margin-right: 1rem;
     padding-left: 0.5rem;
     padding-right: 0.5rem;
     text-align: center;
+    flex-grow: 0;
 }
 
 .h1 {
