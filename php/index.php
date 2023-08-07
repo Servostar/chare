@@ -8,7 +8,7 @@
     <title>
         <?php echo $_ENV['SERVER_NAME'].': '.$_SERVER['REQUEST_URI'] ?>
     </title>
-    <link rel="stylesheet" type="text/css" href="../master.css">
+    <link rel="stylesheet" type="text/css" href="/master.css">
 </head>
 <body>
 

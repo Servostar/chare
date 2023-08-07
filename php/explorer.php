@@ -9,13 +9,14 @@ function create_file_html($file): void
 
     $lastAccessTime = get_last_accesstime($file);
 
-    $target = ".".$_SERVER['REQUEST_URI'];
-    if (!str_ends_with($target, "/")) {
-        $target = $target."/";
+    $protocol = empty($_SERVER['HTTPS']) ? 'http' : 'https';
+    $url = "$protocol://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
+    if (!str_ends_with($url, "/")) {
+        $url .= "/";
     }
-    $target = $target.$fileName;
+    $url .= $fileName;
 
-    $sanitized_uri = filter_var($target, FILTER_SANITIZE_URL);
+    $sanitized_uri = filter_var($url, FILTER_SANITIZE_URL);
 
     if (is_dir($file)) {
         format_file_entry_html($sanitized_uri, $fileName, $filesize, $lastAccessTime, "folder-icon");
