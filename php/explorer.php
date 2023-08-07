@@ -9,7 +9,12 @@ function create_file_html($file): void
 
     $lastAccessTime = get_last_accesstime($file);
 
-    $target = $_SERVER['REQUEST_URI'] . DIRECTORY_SEPARATOR . $fileName;
+    $target = ".".$_SERVER['REQUEST_URI'];
+    if (!str_ends_with($target, "/")) {
+        $target = $target."/";
+    }
+    $target = $target.$fileName;
+
     $sanitized_uri = filter_var($target, FILTER_SANITIZE_URL);
 
     if (is_dir($file)) {

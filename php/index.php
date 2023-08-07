@@ -13,7 +13,7 @@
 <body>
 
 <div id="header">
-    <div class="h1">CDN @ <?php echo getenv('SERVER_NAME') ?>
+    <div class="h1">CDN at <?php echo getenv('SERVER_NAME') ?>
         <div class="subtitle">Open Source Content Delivery Platform</div>
     </div>
     <div id="links">
