@@ -69,6 +69,7 @@ usort($entries, function ($a, $b) use ($dir) {
         return $aIsDir ? -1 : 1;
     }
 });
+
 foreach ($entries as $entry) {
 
     if (in_array($entry, $ignore)) {
@@ -90,4 +91,9 @@ foreach ($entries as $entry) {
     }
 
     create_file_html($file);
+}
+
+if (count($entries) <= 2) {
+    echo "<div class='information'>directory is empty</div>";
+    return;
 }

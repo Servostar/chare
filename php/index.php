@@ -32,7 +32,7 @@
         ?>
 
         <div id="folder-view-head">
-            <div id="last-update-time">shared files</div>
+            <div id="last-update-time"><?php echo $_SERVER['REQUEST_URI'] ?></div>
             <div id="download-group">
                 <div id="download-type">ZIP</div>
                 <form method="post" action="">
@@ -45,9 +45,7 @@
             <?php include 'statistics.php'; ?>
         </div>
 
-        <div id="folder-path">
-            <?php echo $_SERVER['REQUEST_URI'] ?>
-        </div>
+        <div id="folder-path">Content</div>
         <div id="folder-view">
             <?php include 'explorer.php'; ?>
         </div>

@@ -42,16 +42,15 @@ html, body {
     border-bottom: 2pt solid var(--accent-color);
     margin-left: 1rem;
     margin-right: 1rem;
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
+    padding: 0.5rem;
     text-align: center;
     flex-grow: 0;
 }
 
 .h1 {
+    width: calc(min(90%, 65rem));
     margin: auto;
-    text-align: center;
-    padding-left: 4rem;
+    text-align: left;
     font-weight: bold;
     font-size: 24pt;
     padding-bottom: 1rem;
@@ -91,8 +90,9 @@ html, body {
 
 #btn-download {
     border-radius: 0 0.5rem 0.5rem 0;
-    border: 1pt solid var(--border-color);
-    border-left: none;
+    border-top: 1pt solid var(--border-color);
+    border-right: 1pt solid var(--border-color);
+    border-bottom: 1pt solid var(--border-color);
     padding: 2pt 2rem 2pt 8pt;
     height: 100%;
     box-sizing: border-box;
@@ -104,8 +104,9 @@ html, body {
     flex-basis: 100%;
     flex-wrap: wrap;
     border-radius: 0 0 0.5rem 0.5rem;
-    border: 1pt solid var(--border-color);
-    border-top: none;
+    border-left: 1pt solid var(--border-color);
+    border-right: 1pt solid var(--border-color);
+    border-bottom: 1pt solid var(--border-color);
     font-family: sans-serif;
 }
 
@@ -114,11 +115,13 @@ html, body {
     flex-basis: 100%;
     flex-wrap: wrap;
     border-radius: 0.5rem 0.5rem 0 0;
-    border: 1pt solid var(--border-color);
-    border-bottom: none;
     margin-top: 1rem;
     padding: 0.5rem;
+    border-top: 1pt solid var(--border-color);
+    border-left: 1pt solid var(--border-color);
+    border-right: 1pt solid var(--border-color);
     background: var(--highlight-background-color);
+    font-weight: bold;
 }
 
 .folder-view-item {
@@ -254,8 +257,9 @@ html, body {
     flex-basis: 100%;
     flex-wrap: wrap;
     border-radius: 0 0 0.5rem 0.5rem;
-    border: 1pt solid var(--border-color);
-    border-top: none;
+    border-left: 1pt solid var(--border-color);
+    border-right: 1pt solid var(--border-color);
+    border-bottom: 1pt solid var(--border-color);
     padding: 1rem;
 }
 
@@ -341,19 +345,19 @@ pre {
 }
 
 .error {
-    border: 1pt solid red;
+    border: 1pt solid crimson;
     border-radius: 0.5rem;
-    background: rgba(255, 0, 0, 0.25);
+    background: rgba(220, 20, 60, 0.25);
     padding: 1rem;
     text-align: center;
     flex-basis: 100%;
     margin: 1rem;
 }
 
-.warning {
-    border: 1pt solid yellow;
+.information {
+    border: 1pt solid cornflowerblue;
     border-radius: 0.5rem;
-    background: rgba(255, 255, 0, 0.25);
+    background: rgba(100, 149, 237, 0.25);
     padding: 1rem;
     text-align: center;
     flex-basis: 100%;
