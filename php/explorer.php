@@ -9,10 +9,10 @@ function create_file_html($file): void
 
     $lastAccessTime = get_last_accesstime($file);
 
-    $target = $_SERVER['REQUEST_URI'].DIRECTORY_SEPARATOR.$fileName;
+    $target = $_SERVER['REQUEST_URI'] . DIRECTORY_SEPARATOR . $fileName;
     $sanitized_uri = filter_var($target, FILTER_SANITIZE_URL);
 
-    if(is_dir($file)) {
+    if (is_dir($file)) {
         format_file_entry_html($sanitized_uri, $fileName, $filesize, $lastAccessTime, "folder-icon");
     } else {
         format_file_entry_html($sanitized_uri, $fileName, $filesize, $lastAccessTime, "file-icon");
@@ -34,7 +34,7 @@ function get_last_accesstime($file): string
 
 function format_file_entry_html($target_path, $filename, $filesize, $editdate, $iconclass): void
 {
-    echo '<a class="folder-view-item '.$iconclass.'" href="'.$target_path.'">
+    echo '<a class="folder-view-item ' . $iconclass . '" href="' . $target_path . '">
                             <div class="file-name">' . $filename . '</div>
                             <div class="file-size">' . $filesize . '</div>
                             <div class="file-added">' . $editdate . '</div>
@@ -54,7 +54,7 @@ $ignore = explode("\n", read_file_or_default("/srv/config/.ignore", "."));
 
 $entries = scandir($dir);
 sort($entries);
-usort($entries, function($a, $b) use ($dir) {
+usort($entries, function ($a, $b) use ($dir) {
     $aIsDir = is_dir($dir . DIRECTORY_SEPARATOR . $a);
     $bIsDir = is_dir($dir . DIRECTORY_SEPARATOR . $b);
     if ($aIsDir == $bIsDir) {
@@ -69,7 +69,7 @@ foreach ($entries as $entry) {
         continue;
     }
 
-    $file = current_dir().DIRECTORY_SEPARATOR.$entry;
+    $file = current_dir() . DIRECTORY_SEPARATOR . $entry;
 
     if (preg_match('/^readme(\.md)?$/i', $entry)) {
         $GLOBALS["readme"] = $file;

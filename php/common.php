@@ -27,9 +27,8 @@ function current_dir(): false|string
 {
     $share_path = __get_share_path();
     $rel_path = $share_path.DIRECTORY_SEPARATOR.$_SERVER['REQUEST_URI'];
-    $abs_path = realpath($rel_path);
 
-    return $abs_path;
+    return realpath($rel_path);
 }
 
 function format_bytes($bytes, $decimals = 2): string

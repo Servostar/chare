@@ -22,6 +22,15 @@
 </div>
 <div id="two-columns">
     <div id="content">
+
+        <?php
+        // if the folder does not exist, stop generating more
+        if ($GLOBALS["request"] === false) {
+            echo '<div class="error">directory not found: '.$_SERVER['REQUEST_URI'].'</div>';
+            exit;
+        }
+        ?>
+
         <div id="folder-view-head">
             <div id="last-update-time">shared files</div>
             <div id="download-group">
