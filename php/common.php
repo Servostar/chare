@@ -17,6 +17,11 @@ function __get_share_path(): string
     return $env_path;
 }
 
+function file_uri(): string
+{
+    return preg_replace("/^\/files/", '', $_SERVER['REQUEST_URI']);
+}
+
 /**
  * Get the absolute path that is to be viewed as share.
  * Returns false if the path is invalid or the folder does not exist or
@@ -26,7 +31,7 @@ function __get_share_path(): string
 function current_dir(): false|string
 {
     $share_path = __get_share_path();
-    $rel_path = $share_path.DIRECTORY_SEPARATOR.preg_replace("/^\/files/", '', $_SERVER['REQUEST_URI']);
+    $rel_path = $share_path.DIRECTORY_SEPARATOR.file_uri();
 
     return realpath($rel_path);
 }

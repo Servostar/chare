@@ -17,7 +17,7 @@
         <div class="subtitle">Open Source Content Delivery Platform</div>
     </div>
     <div id="links">
-        <?php include 'links.php' ?>
+        <?php include_once 'links.php' ?>
     </div>
 </div>
 <div id="two-columns">
@@ -32,7 +32,12 @@
         ?>
 
         <div id="folder-view-head">
-            <div id="last-update-time"><?php echo $_SERVER['REQUEST_URI'] ?></div>
+            <div id="last-update-time">
+                <?php
+                    include_once 'common.php';
+                    echo file_uri();
+                ?>
+            </div>
             <div id="download-group">
                 <div id="download-type">ZIP</div>
                 <form method="post" action="">
@@ -42,16 +47,16 @@
         </div>
 
         <div id="stats-group">
-            <?php include 'statistics.php'; ?>
+            <?php include_once 'statistics.php'; ?>
         </div>
 
         <div id="folder-path">Content</div>
         <div id="folder-view">
-            <?php include 'explorer.php'; ?>
+            <?php include_once 'explorer.php'; ?>
         </div>
-        <?php include 'readme.php'; ?>
+        <?php include_once 'readme.php'; ?>
     </div>
-    <?php include 'about.php' ?>
+    <?php include_once 'about.php' ?>
 </div>
 
 <div id="footer">
