@@ -6,15 +6,21 @@ $dir = current_dir();
 
 $GLOBALS["request"] = $dir;
 
-// if a file and not a directory was requested, download the file and terminate
-// if a directory was requested, build a html file as response
 if (!file_exists($dir) || is_dir($dir)) {
     include_once 'index.php';
 } else {
+    $ctype = "text/plain"; //mime_content_type($dir);
+
+    // required for IE, otherwise Content-disposition is ignored
+    if(ini_get('zlib.output_compression'))
+        ini_set('zlib.output_compression', 'Off');
+
+    $filename = basename($dir);
+
     // Define header information
     header('Content-Description: File Transfer');
-    header('Content-Type: application/octet-stream');
-    header('Content-Disposition: attachment; filename="' . basename($dir) . '"');
+    header('Content-Type: '.$ctype);
+    header('Content-Disposition: inline; filename="' . $filename . '"');
     header('Expires: 0');
     header('Cache-Control: must-revalidate');
     header('Pragma: public');
@@ -23,4 +29,5 @@ if (!file_exists($dir) || is_dir($dir)) {
     flush();
     // Read the file
     readfile($dir);
+    exit();
 }

@@ -1,6 +1,7 @@
 {
   "require": {
     "league/commonmark": "*",
-    "ext-zip": "*"
+    "ext-zip": "*",
+    "ext-fileinfo": "*"
   }
 }

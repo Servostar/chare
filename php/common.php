@@ -26,7 +26,7 @@ function __get_share_path(): string
 function current_dir(): false|string
 {
     $share_path = __get_share_path();
-    $rel_path = $share_path.DIRECTORY_SEPARATOR.$_SERVER['REQUEST_URI'];
+    $rel_path = $share_path.DIRECTORY_SEPARATOR.preg_replace("/^\/files/", '', $_SERVER['REQUEST_URI']);
 
     return realpath($rel_path);
 }
