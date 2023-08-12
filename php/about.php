@@ -7,6 +7,8 @@ function create_target($path): string
     return filter_var($target, FILTER_SANITIZE_URL);
 }
 
+$html = '';
+
 $aboutfile = $GLOBALS["description"];
 
 if ($aboutfile !== "NODESCRIPTION") {
@@ -19,15 +21,19 @@ if ($aboutfile !== "NODESCRIPTION") {
 
         if ($text !== false) {
             fclose($fileHandle);
-            echo '<div id="description">'.$text.'</div>';
+            $html .= '<div id="description">'.$text.'</div>';
         }
     }
 }
 
 if ($GLOBALS["license"] !== "NOLICENSE") {
-    echo '<a class="about-info license-icon" id="info-license" href="'.create_target($GLOBALS["license"]).'">License</a>';
+    $html .= '<a class="about-info license-icon" id="info-license" href="'.create_target($GLOBALS["license"]).'">License</a>';
 }
 
 if ($GLOBALS["readme"] !== "NOREADME") {
-    echo '<a class="about-info readme-icon" id="info-readme" href="'.create_target($GLOBALS["readme"]).'">Readme</a>';
+    $html .= '<a class="about-info readme-icon" id="info-readme" href="'.create_target($GLOBALS["readme"]).'">Readme</a>';
+}
+
+if (!empty($html)) {
+    echo '<div id="about"><div class="h2">About</div>'.$html.'</div>';
 }

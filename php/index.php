@@ -51,10 +51,7 @@
         </div>
         <?php include 'readme.php'; ?>
     </div>
-    <div id="about">
-        <div class="h2">About</div>
-        <?php include 'about.php' ?>
-    </div>
+    <?php include 'about.php' ?>
 </div>
 
 <div id="footer">
