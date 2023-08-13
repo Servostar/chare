@@ -27,11 +27,17 @@ if ($aboutfile !== "NODESCRIPTION") {
 }
 
 if ($GLOBALS["license"] !== "NOLICENSE") {
-    $html .= '<a class="about-info license-icon" id="info-license" href="'.create_target($GLOBALS["license"]).'">License</a>';
+    $html .= '<a class="about-info" id="info-license" href="'.create_target($GLOBALS["license"]).'">
+                <i class="fa fa-regular fa-copyright"></i>
+                License
+            </a>';
 }
 
 if ($GLOBALS["readme"] !== "NOREADME") {
-    $html .= '<a class="about-info readme-icon" id="info-readme" href="'.create_target($GLOBALS["readme"]).'">Readme</a>';
+    $html .= '<a class="about-info" id="info-readme" href="'.create_target($GLOBALS["readme"]).'">
+                <i class="fa fa-brands fa-readme"></i>
+                Readme
+            </a>';
 }
 
 if (!empty($html)) {

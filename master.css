@@ -3,12 +3,12 @@ html, body {
     padding: 0;
     margin: 0;
 
-    --border-color: #adadad;
+    --border-color: #cecece;
     --highlight-background-color: #efefef;
-    --subtile-font-color: #4f4f4f;
+    --subtile-font-color: #646464;
     --background-color: #ffffff;
     --font-color: black;
-    --accent-color: rgba(255, 165, 0, 0.75);
+    --border-radius: 0.3rem;
 
     background: var(--background-color);
 
@@ -39,12 +39,17 @@ html, body {
 .link {
     text-decoration: none;
     color: var(--subtile-font-color);
-    border-bottom: 2pt solid var(--accent-color);
-    margin-left: 1rem;
-    margin-right: 1rem;
+    margin-left: 0.2rem;
+    margin-right: 0.2rem;
+    margin-bottom: 0.1rem;
     padding: 0.5rem;
     text-align: center;
     flex-grow: 0;
+    border-radius: var(--border-radius);
+}
+
+.link:hover {
+    background: var(--background-color);
 }
 
 .h1 {
@@ -82,14 +87,14 @@ html, body {
 }
 
 #download-type {
-    background: linear-gradient(0, rgb(0, 255, 41) 0%, rgb(170, 255, 185) 100%);
+    background: rgb(30, 211, 58);
     padding: 2pt 6pt 2pt 6pt;
-    border-radius: 0.5rem 0 0 0.5rem;
+    border-radius: var(--border-radius) 0 0 var(--border-radius);
     border: 1pt solid var(--border-color);
 }
 
 #btn-download {
-    border-radius: 0 0.5rem 0.5rem 0;
+    border-radius: 0 var(--border-radius) var(--border-radius) 0;
     border-top: 1pt solid var(--border-color);
     border-right: 1pt solid var(--border-color);
     border-bottom: 1pt solid var(--border-color);
@@ -103,7 +108,7 @@ html, body {
     display: flex;
     flex-basis: 100%;
     flex-wrap: wrap;
-    border-radius: 0 0 0.5rem 0.5rem;
+    border-radius: 0 0 var(--border-radius) var(--border-radius);
     border-left: 1pt solid var(--border-color);
     border-right: 1pt solid var(--border-color);
     border-bottom: 1pt solid var(--border-color);
@@ -114,7 +119,7 @@ html, body {
     display: flex;
     flex-basis: 100%;
     flex-wrap: wrap;
-    border-radius: 0.5rem 0.5rem 0 0;
+    border-radius: var(--border-radius) var(--border-radius) 0 0;
     margin-top: 1rem;
     padding: 0.5rem;
     border-top: 1pt solid var(--border-color);
@@ -130,7 +135,7 @@ html, body {
     flex-basis: 100%;
     text-decoration: none;
     color: black;
-    padding: 5pt;
+    padding: 5pt 10pt;
     border-top: 1pt solid var(--border-color);
 }
 
@@ -138,101 +143,9 @@ html, body {
     background: var(--highlight-background-color);
 }
 
-.folder-icon::before {
-    content: "";
-    display: inline-block;
-    background-image: url("res/folder.svg");
-    background-size: contain;
-    background-repeat: no-repeat;
-    width: 1rem;
-    height: 1rem;
+.file-icon {
     margin-right: 1rem;
-    margin-left: 0.5rem;
 }
-
-.readme-icon::before {
-    content: "";
-    display: inline-block;
-    background-image: url("res/readme.svg");
-    background-size: contain;
-    background-repeat: no-repeat;
-    width: 1rem;
-    height: 1rem;
-    margin-right: 1rem;
-    margin-left: 0.5rem;
-}
-
-.about-icon::before {
-    content: "";
-    display: inline-block;
-    background-image: url("res/about.svg");
-    background-size: contain;
-    background-repeat: no-repeat;
-    width: 1rem;
-    height: 1rem;
-    margin-right: 1rem;
-    margin-left: 0.5rem;
-}
-
-.license-icon::before {
-    content: "";
-    display: inline-block;
-    background-image: url("res/license.svg");
-    background-size: contain;
-    background-repeat: no-repeat;
-    width: 1rem;
-    height: 1rem;
-    margin-right: 1rem;
-    margin-left: 0.5rem;
-}
-
-.file-icon::before {
-    content: "";
-    display: inline-block;
-    background-image: url("res/file.svg");
-    background-size: contain;
-    background-repeat: no-repeat;
-    width: 1rem;
-    height: 1rem;
-    margin-right: 1rem;
-    margin-left: 0.5rem;
-}
-
-.home-icon::before {
-    content: "";
-    display: inline-block;
-    background-image: url("res/home.svg");
-    background-size: contain;
-    background-repeat: no-repeat;
-    width: 1rem;
-    height: 1rem;
-    margin-right: 1rem;
-    margin-left: 0.5rem;
-}
-
-.legal-icon::before {
-    content: "";
-    display: inline-block;
-    background-image: url("res/legal.svg");
-    background-size: contain;
-    background-repeat: no-repeat;
-    width: 1rem;
-    height: 1rem;
-    margin-right: 1rem;
-    margin-left: 0.5rem;
-}
-
-.impressum-icon::before {
-     content: "";
-     display: inline-block;
-     background-image: url("res/impressum.svg");
-     background-size: contain;
-     background-repeat: no-repeat;
-     width: 1rem;
-     height: 1rem;
-     margin-right: 1rem;
-     margin-left: 0.5rem;
- }
 
 .file-name {
     flex: 1;
@@ -241,13 +154,13 @@ html, body {
 
 .file-added {
     flex: 0.7;
-    text-align: right;
+    text-align: left;
     flex-wrap: nowrap;
     color: var(--subtile-font-color);
 }
 
 .file-size {
-    flex: 0.6;
+    flex: 0.5;
     text-align: right;
     flex-wrap: nowrap;
     color: var(--subtile-font-color);
@@ -256,7 +169,7 @@ html, body {
 #readme {
     flex-basis: 100%;
     flex-wrap: wrap;
-    border-radius: 0 0 0.5rem 0.5rem;
+    border-radius: 0 0 var(--border-radius) var(--border-radius);
     border-left: 1pt solid var(--border-color);
     border-right: 1pt solid var(--border-color);
     border-bottom: 1pt solid var(--border-color);
@@ -267,7 +180,7 @@ html, body {
     display: flex;
     flex-basis: 100%;
     flex-wrap: wrap;
-    border-radius: 0.5rem 0.5rem 0 0;
+    border-radius: var(--border-radius) var(--border-radius) 0 0;
     border: 1pt solid var(--border-color);
     margin-top: 1rem;
     padding: 0.5rem;
@@ -277,7 +190,7 @@ html, body {
 
 pre {
     background: var(--highlight-background-color);
-    border-radius: 0.5rem;
+    border-radius: var(--border-radius);
     padding: 0.5rem;
 }
 
@@ -300,7 +213,7 @@ pre {
     margin-top: 1rem;
     flex-basis: 100%;
     flex-wrap: nowrap;
-    border-radius: 0.5rem;
+    border-radius: var(--border-radius);
     border: 1pt solid var(--border-color);
     background: var(--highlight-background-color);
     padding: 0.5rem;
@@ -346,7 +259,7 @@ pre {
 
 .error {
     border: 1pt solid crimson;
-    border-radius: 0.5rem;
+    border-radius: var(--border-radius);
     background: rgba(220, 20, 60, 0.25);
     padding: 1rem;
     text-align: center;
@@ -356,7 +269,7 @@ pre {
 
 .information {
     border: 1pt solid cornflowerblue;
-    border-radius: 0.5rem;
+    border-radius: var(--border-radius);
     background: rgba(100, 149, 237, 0.25);
     padding: 1rem;
     text-align: center;
