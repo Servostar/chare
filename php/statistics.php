@@ -24,6 +24,6 @@ foreach($files as $file) {
     }
 }
 
-echo '<div id="folder-count">'.$folderCount.' folder</div>
-    <div id="file-count">'.$fileCount.' files</div>
-    <div id="file-size-total">'.$size.' </div>';
+echo '<div id="folder-count"><i class="fa fa-regular fa-folder"></i>&nbsp;'.$folderCount.' folder</div>
+    <div id="file-count"><i class="fa fa-regular fa-file"></i>&nbsp;'.$fileCount.' files</div>
+    <div id="file-size-total"><i class="fa fa-solid fa-database"></i>&nbsp;'.$size.' </div>';

@@ -19,9 +19,9 @@ function create_file_html($file): void
     $sanitized_uri = filter_var($url, FILTER_SANITIZE_URL);
 
     if (is_dir($file)) {
-        format_file_entry_html($sanitized_uri, $fileName, $filesize, $lastAccessTime, "folder-icon");
+        format_file_entry_html($sanitized_uri, $fileName, $filesize, $lastAccessTime, "fa fa-solid fa-folder");
     } else {
-        format_file_entry_html($sanitized_uri, $fileName, $filesize, $lastAccessTime, "file-icon");
+        format_file_entry_html($sanitized_uri, $fileName, $filesize, $lastAccessTime, "fa fa-regular fa-file");
     }
 }
 
@@ -40,10 +40,10 @@ function get_last_accesstime($file): string
 
 function format_file_entry_html($target_path, $filename, $filesize, $editdate, $iconclass): void
 {
-    echo '<a class="folder-view-item ' . $iconclass . '" href="' . $target_path . '">
-                            <div class="file-name">' . $filename . '</div>
-                            <div class="file-size">' . $filesize . '</div>
+    echo '<a class="folder-view-item" href="' . $target_path . '">
+                            <div class="file-name"><i class="file-icon '.$iconclass.'"></i>' . $filename . '</div>
                             <div class="file-added">' . $editdate . '</div>
+                            <div class="file-size">' . $filesize . '</div>
                         </a>';
 }
 
