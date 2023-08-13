@@ -291,3 +291,40 @@ pre {
     padding-bottom: 1rem;
     margin-bottom: 1rem;
 }
+
+#directory-path {
+    width: calc(min(90%, 65rem));
+    display: flex;
+    margin: auto auto 1rem;
+}
+
+.directory-segment {
+    display: inline;
+    font-size: 1.25rem;
+    font-weight: bold;
+    padding-left: 0.2rem;
+    text-decoration: none;
+    color: var(--accent-color);
+    text-underline-style: none;
+}
+
+.directory-segment:hover {
+    text-underline-color: var(--accent-color);
+    text-decoration: underline;
+}
+
+.directory-separator {
+    display: inline;
+    font-size: 1.25rem;
+    padding-left: 0.3rem;
+    padding-right: 0.3rem;
+    color: var(--subtile-font-color);
+}
+
+#root-segment {
+    color: var(--font-color);
+}
+
+#root-segment:hover {
+    text-underline-color: var(--font-color);
+}
