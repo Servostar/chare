@@ -16,6 +16,9 @@
     <div class="h1">CDN at <?php echo getenv('SERVER_NAME') ?>
         <div class="subtitle">Open Source Content Delivery Platform</div>
     </div>
+    <div id="directory-path">
+        <?php include_once "directorypath.php" ;?>
+    </div>
     <div id="links">
         <?php include_once 'links.php' ?>
     </div>
@@ -33,10 +36,7 @@
 
         <div id="folder-view-head">
             <div id="last-update-time">
-                <?php
-                    include_once 'common.php';
-                    echo file_uri();
-                ?>
+
             </div>
             <div id="download-group">
                 <div id="download-type">ZIP</div>

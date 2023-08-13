@@ -5,23 +5,23 @@ include_once 'common.php';
 function create_file_html($file): void
 {
     $filesize = filesize_as_str($file);
-    $fileName = basename($file);
+    $filename = basename($file);
 
     $lastAccessTime = get_last_accesstime($file);
 
-    $protocol = empty($_SERVER['HTTPS']) ? 'http' : 'https';
-    $url = "$protocol://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
+    $target = $_SERVER['REQUEST_URI'].DIRECTORY_SEPARATOR.$filename;
+    $url = filter_var($target, FILTER_SANITIZE_URL);
     if (!str_ends_with($url, "/")) {
         $url .= "/";
     }
-    $url .= $fileName;
+    $url .= $filename;
 
     $sanitized_uri = filter_var($url, FILTER_SANITIZE_URL);
 
     if (is_dir($file)) {
-        format_file_entry_html($sanitized_uri, $fileName, $filesize, $lastAccessTime, "folder-icon");
+        format_file_entry_html($sanitized_uri, $filename, $filesize, $lastAccessTime, "folder-icon");
     } else {
-        format_file_entry_html($sanitized_uri, $fileName, $filesize, $lastAccessTime, "file-icon");
+        format_file_entry_html($sanitized_uri, $filename, $filesize, $lastAccessTime, "file-icon");
     }
 }
 
