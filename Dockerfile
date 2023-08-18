@@ -14,7 +14,7 @@ RUN chmod +x /var/scripts/sync.sh
 # copy essential files for web service
 COPY nginx.conf /etc/nginx
 COPY php /var/www/html
-COPY res /var/www/html/res
+COPY js /var/www/html
 COPY master.css /var/www/html
 COPY composer.json /var/www/html
 COPY vendor /var/www/html/vendor

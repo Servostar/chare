@@ -9,19 +9,13 @@ function create_file_html($file): void
 
     $lastAccessTime = get_last_accesstime($file);
 
-    $target = $_SERVER['REQUEST_URI'].DIRECTORY_SEPARATOR.$filename;
-    $url = filter_var($target, FILTER_SANITIZE_URL);
-    if (!str_ends_with($url, "/")) {
-        $url .= "/";
-    }
-    $url .= $filename;
-
-    $sanitized_uri = filter_var($url, FILTER_SANITIZE_URL);
+    $uri = preg_replace("/\/+/", '/', $_SERVER['REQUEST_URI'].DIRECTORY_SEPARATOR.$filename);
+    $url = create_link_from_uri($uri);
 
     if (is_dir($file)) {
-        format_file_entry_html($sanitized_uri, $fileName, $filesize, $lastAccessTime, "fa fa-solid fa-folder");
+        format_file_entry_html($url, $filename, $filesize, $lastAccessTime, "fa fa-solid fa-folder-blank", "accent");
     } else {
-        format_file_entry_html($sanitized_uri, $fileName, $filesize, $lastAccessTime, "fa fa-regular fa-file");
+        format_file_entry_html($url, $filename, $filesize, $lastAccessTime, "fa fa-regular fa-file", "");
     }
 }
 
@@ -38,10 +32,10 @@ function get_last_accesstime($file): string
     return pretty_datetime_diff($lastAccessTime);
 }
 
-function format_file_entry_html($target_path, $filename, $filesize, $editdate, $iconclass): void
+function format_file_entry_html($target_path, $filename, $filesize, $editdate, $iconclass, $colorclass): void
 {
     echo '<a class="folder-view-item" href="' . $target_path . '">
-                            <div class="file-name"><i class="file-icon '.$iconclass.'"></i>' . $filename . '</div>
+                            <div class="file-name"><i class="file-icon '.$iconclass." ".$colorclass.'"></i>' . $filename . '</div>
                             <div class="file-added">' . $editdate . '</div>
                             <div class="file-size">' . $filesize . '</div>
                         </a>';
@@ -55,6 +49,7 @@ if ($dir === false) {
 $GLOBALS["description"] = "NODESCRIPTION";
 $GLOBALS["readme"] = "NOREADME";
 $GLOBALS["license"] = "NOLICENSE";
+$GLOBALS["coc"] = "NOCOC";
 
 $ignore = explode("\n", read_file_or_default("/srv/config/.ignore", "."));
 
@@ -70,9 +65,15 @@ usort($entries, function ($a, $b) use ($dir) {
     }
 });
 
+$is_root = is_root();
+
 foreach ($entries as $entry) {
 
     if (in_array($entry, $ignore)) {
+        continue;
+    }
+
+    if ($is_root && $entry == "..") {
         continue;
     }
 
@@ -88,6 +89,10 @@ foreach ($entries as $entry) {
 
     if (preg_match('/^about(\.txt)?$/i', $entry)) {
         $GLOBALS["description"] = $file;
+    }
+
+    if (preg_match('/^code_?of_?conduct(\.txt|\.md)?$/i', $entry)) {
+        $GLOBALS["coc"] = $file;
     }
 
     create_file_html($file);

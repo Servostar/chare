@@ -9,7 +9,9 @@
         <?php echo $_ENV['SERVER_NAME'].': '.$_SERVER['REQUEST_URI'] ?>
     </title>
     <link rel="stylesheet" type="text/css" href="/master.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.7.0.slim.min.js" integrity="sha256-tG5mcZUtJsZvyKAxYLVXrmjKBVLd6VpVccqz/r4ypFE=" crossorigin="anonymous"></script>
+    <script src="/clipboard.js" type="text/javascript"></script>
 </head>
 <body>
 
@@ -36,15 +38,27 @@
         ?>
 
         <div id="folder-view-head">
-            <div id="last-update-time">
 
-            </div>
-            <div id="download-group">
-                <div id="download-type">ZIP</div>
+            <div id="download-zip-group">
+                <div id="download-zip-type">ZIP</div>
                 <form method="post" action="">
-                    <input id="btn-download" type="submit" name="download-zip" value="Download Zip">
+                    <input id="btn-zip-download" type="submit" name="download-zip" value="Download Zip">
                 </form>
             </div>
+
+            <div id="download-zip-group" class="align-right">
+                <div id="download-zip-type">HTTPS</div>
+                <div id="https-download-link">
+                    <?php
+                    include_once "common.php";
+                    echo create_link_from_uri($_SERVER['REQUEST_URI']);
+                    ?>
+                </div>
+                <button id="copy-to-clipboard" onclick="copyLinkToClipboard()">
+                    <i class="fa fa-regular fa-clipboard"></i>
+                </button>
+            </div>
+
         </div>
 
         <div id="stats-group">
@@ -63,6 +77,5 @@
 <div id="footer">
     <div id="powered-by">Powered by Chare: <a href="https://github.com/Servostar/chare">Source</a></div>
 </div>
-
 </body>
 </html>

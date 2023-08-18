@@ -9,12 +9,17 @@ html, body {
     --background-color: #ffffff;
     --font-color: black;
     --border-radius: 0.3rem;
+    --accent-color: #d9a23f;
 
     background: var(--background-color);
 
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+}
+
+.accent {
+    color: var(--accent-color);
 }
 
 #header {
@@ -75,33 +80,75 @@ html, body {
     flex: 1;
 }
 
-#last-update-time {
-    flex-grow: 1;
-    margin: auto;
-}
-
-#download-group {
+#download-zip-group {
     display: flex;
     flex-wrap: nowrap;
     flex: 0;
 }
 
-#download-type {
-    background: rgb(30, 211, 58);
-    padding: 2pt 6pt 2pt 6pt;
-    border-radius: var(--border-radius) 0 0 var(--border-radius);
-    border: 1pt solid var(--border-color);
+.align-right {
+    margin-left: auto;
 }
 
-#btn-download {
-    border-radius: 0 var(--border-radius) var(--border-radius) 0;
+.spacing-right {
+    margin-right: 0.5rem;
+}
+
+#download-zip-type {
+    background: var(--accent-color);
+    padding: 2pt 6pt 2pt 6pt;
+    border-radius: var(--border-radius) 0 0 var(--border-radius);
+    border-left: 1pt solid var(--border-color);
     border-top: 1pt solid var(--border-color);
-    border-right: 1pt solid var(--border-color);
     border-bottom: 1pt solid var(--border-color);
+}
+
+#https-download-link {
+    border-top: 1pt solid var(--border-color);
+    border-bottom: 1pt solid var(--border-color);
+    border-right: 1pt solid var(--border-color);
+    background: var(--background-color);
     padding: 2pt 2rem 2pt 8pt;
     height: 100%;
     box-sizing: border-box;
     font-size: 1rem;
+    flex-wrap: nowrap;
+    text-wrap: none;
+    white-space: nowrap;
+}
+
+#copy-to-clipboard {
+    border-radius: 0 var(--border-radius) var(--border-radius) 0;
+    border-top: 1pt solid var(--border-color);
+    border-bottom: 1pt solid var(--border-color);
+    border-right: 1pt solid var(--border-color);
+    border-left: none;
+    padding: 2pt 4pt;
+    width: 2rem;
+    background: var(--highlight-background-color);
+}
+
+#copy-to-clipboard:hover {
+    background: var(--background-color);
+}
+
+.no-description {
+    font-style: italic;
+    color: var(--subtile-font-color);
+}
+
+#btn-zip-download {
+    border-radius: 0 var(--border-radius) var(--border-radius) 0;
+    border: 1pt solid var(--border-color);
+    background: var(--highlight-background-color);
+    padding: 2pt 2rem 2pt 8pt;
+    height: 100%;
+    box-sizing: border-box;
+    font-size: 1rem;
+}
+
+#btn-zip-download:hover {
+    background: var(--background-color);
 }
 
 #folder-view {
@@ -150,6 +197,11 @@ html, body {
 .file-name {
     flex: 1;
     color: var(--font-color);
+}
+
+.file-name:hover {
+    text-decoration: underline;
+    color: var(--accent-color);
 }
 
 .file-added {
@@ -207,6 +259,10 @@ pre {
 
 #powered-by {
     padding: 4pt;
+}
+
+.fa-width {
+    width: 2rem;
 }
 
 #stats-group {
@@ -303,6 +359,7 @@ pre {
     font-size: 1.25rem;
     font-weight: bold;
     padding-left: 0.2rem;
+    padding-right: 0.2rem;
     text-decoration: none;
     color: var(--accent-color);
     text-underline-style: none;
@@ -311,6 +368,18 @@ pre {
 .directory-segment:hover {
     text-underline-color: var(--accent-color);
     text-decoration: underline;
+}
+
+.directory-segment-invalid {
+    display: inline;
+    font-size: 1.25rem;
+    font-weight: bold;
+    padding-left: 0.2rem;
+    padding-right: 0.2rem;
+    text-decoration: underline;
+    color: var(--subtile-font-color);
+    text-underline-style: wave;
+    text-underline-color: crimson;
 }
 
 .directory-separator {
@@ -323,6 +392,7 @@ pre {
 
 #root-segment {
     color: var(--font-color);
+    padding-right: 0.2rem;
 }
 
 #root-segment:hover {

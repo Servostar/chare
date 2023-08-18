@@ -17,9 +17,43 @@ function __get_share_path(): string
     return $env_path;
 }
 
+function is_root(): bool
+{
+    return preg_match("/^\/files\/*$/", $_SERVER['REQUEST_URI']);
+}
+
 function file_uri(): string
 {
     return preg_replace("/^\/files/", '', $_SERVER['REQUEST_URI']);
+}
+
+/**
+ * Tries to create the locals server url from global $_SERVER variables
+ * @return string
+ */
+function __local_server_url(): string
+{
+    $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http";
+    $host = $_SERVER['HTTP_HOST'];
+    return $protocol . "://" . $host;
+}
+
+/**
+ * Create a full http(s) request url for this server with the specified URI.
+ * @param $uri string uri to append
+ * @return string the full uri
+ */
+function create_link_from_uri(string $uri): string
+{
+    $overwriteurl = getenv("OVERWRITE_URL");
+
+    $url = __local_server_url();
+    if (!empty($overwriteurl))
+    {
+        $url = $overwriteurl;
+    }
+
+    return filter_var($url.$uri, FILTER_SANITIZE_URL);
 }
 
 /**
@@ -46,6 +80,18 @@ function format_bytes($bytes, $decimals = 2): string
 function filesize_as_str($file): string
 {
     $size = filesize($file);
+    if (is_dir($file)) {
+        $iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($file));
+
+        foreach ($iterator as $rfile) {
+            if ($rfile->getFilename() === "..") {
+                continue;
+            }
+            if ($rfile->isFile()) {
+                $size += filesize($rfile->getPathname());
+            }
+        }
+    }
     if ($size !== false) {
         return format_bytes($size);
     }
