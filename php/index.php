@@ -6,7 +6,7 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>
-        <?php echo $_ENV['SERVER_NAME'].': '.$_SERVER['REQUEST_URI'] ?>
+        <?php echo getenv("OVERWRITE_SERVER_NAME").': '.$_SERVER['REQUEST_URI'] ?>
     </title>
     <link rel="stylesheet" type="text/css" href="/master.css">
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" crossorigin="anonymous">
@@ -16,7 +16,7 @@
 <body>
 
 <div id="header">
-    <div class="h1">CDN at <?php echo getenv('SERVER_NAME') ?>
+    <div class="h1">CDN at <?php echo getenv('OVERWRITE_SERVER_NAME') ?>
         <div class="subtitle">Open Source Content Delivery Platform</div>
     </div>
     <div id="directory-path">
@@ -30,36 +30,35 @@
     <div id="content">
 
         <?php
+        include_once "common.php";
+
         // if the folder does not exist, stop generating more
         if ($GLOBALS["request"] === false) {
             echo '<div class="error">directory not found: '.$_SERVER['REQUEST_URI'].'</div>';
             exit;
         }
-        ?>
 
-        <div id="folder-view-head">
-
-            <div id="download-zip-group">
-                <div id="download-zip-type">ZIP</div>
-                <form method="post" action="">
-                    <input id="btn-zip-download" type="submit" name="download-zip" value="Download Zip">
-                </form>
-            </div>
-
-            <div id="download-zip-group" class="align-right">
-                <div id="download-zip-type">HTTPS</div>
-                <div id="https-download-link">
-                    <?php
-                    include_once "common.php";
-                    echo create_link_from_uri($_SERVER['REQUEST_URI']);
-                    ?>
+        if (count(scandir(current_dir())) > 2) {
+            echo '<div id="folder-view-head">
+                    <div id="download-zip-group">
+                        <div id="download-zip-type">ZIP</div>
+                        <form method="post" action="">
+                            <input id="btn-zip-download" type="submit" name="download-zip" value="Download Zip">
+                        </form>
+                    </div>
+                    <div id="download-zip-group" class="align-right">
+                    <div id="download-zip-type">HTTPS</div>
+                    <div id="https-download-link">
+                        '. create_link_from_uri($_SERVER['REQUEST_URI']) .'
+                    </div>
+                    <button id="copy-to-clipboard" onclick="copyLinkToClipboard()">
+                        <i class="fa fa-regular fa-clipboard"></i>
+                    </button>
                 </div>
-                <button id="copy-to-clipboard" onclick="copyLinkToClipboard()">
-                    <i class="fa fa-regular fa-clipboard"></i>
-                </button>
-            </div>
-
-        </div>
+    
+            </div>';
+        }
+        ?>
 
         <div id="stats-group">
             <?php include_once 'statistics.php'; ?>

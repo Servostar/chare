@@ -99,6 +99,5 @@ foreach ($entries as $entry) {
 }
 
 if (count($entries) <= 2) {
-    echo "<div class='information'>directory is empty</div>";
     return;
 }

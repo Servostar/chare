@@ -1,0 +1,14 @@
+version: "3.1"
+services:
+  chare:
+      image: servostar/chare:latest
+      restart: unless-stopped
+      ports:
+        - "8080:80"
+      volumes:
+        - ./public:/var/share
+        - ./repos.tsv:/srv/config/repos.tsv
+        - ./.ignore:/srv/config/.ignore
+      environment:
+        - OVERWRITE_URL=https://cdn.example.com
+        - OVERWRITE_SERVER_NAME=cdn.example.com

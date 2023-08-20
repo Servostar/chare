@@ -1,6 +1,16 @@
 <?php
 
 /**
+ * Tests if the supplied environment variable ios invalid
+ * @param bool|array|string $name
+ * @return bool if the environment variable is invalid or not
+ */
+function is_env_invalid(bool|array|string $name): bool
+{
+    return empty($name) or is_array($name);
+}
+
+/**
  * Get the path to the directory which contents are to be publicly shared.
  * @return string
  */
@@ -10,18 +20,30 @@ function __get_share_path(): string
 
     // if the path to the directory to share is invalid
     // we will use the default share path
-    if (empty($env_path)) {
+    if (is_env_invalid($env_path)) {
         $env_path = "/var/share";
     }
 
     return $env_path;
 }
 
+/**
+ * Tests weather or not the current URI is the root of the share.
+ * Examples:
+ * - /files/
+ * - /files////
+ * - /files
+ * @return bool
+ */
 function is_root(): bool
 {
     return preg_match("/^\/files\/*$/", $_SERVER['REQUEST_URI']);
 }
 
+/**
+ * Returns the URI without the /file/ prefix
+ * @return string
+ */
 function file_uri(): string
 {
     return preg_replace("/^\/files/", '', $_SERVER['REQUEST_URI']);
@@ -45,10 +67,11 @@ function __local_server_url(): string
  */
 function create_link_from_uri(string $uri): string
 {
-    $overwriteurl = getenv("OVERWRITE_URL");
-
     $url = __local_server_url();
-    if (!empty($overwriteurl))
+
+    $overwriteurl = getenv("OVERWRITE_URL");
+    // if the variable is false or an array it is invalid
+    if(!is_env_invalid($overwriteurl))
     {
         $url = $overwriteurl;
     }
@@ -60,14 +83,20 @@ function create_link_from_uri(string $uri): string
  * Get the absolute path that is to be viewed as share.
  * Returns false if the path is invalid or the folder does not exist or
  * the path is outside the directory to share.
+ * @throws Exception if the absolute path is not inside the share path
  * @return false|string
  */
 function current_dir(): false|string
 {
     $share_path = __get_share_path();
     $rel_path = $share_path.DIRECTORY_SEPARATOR.file_uri();
+    $abs_path = realpath($rel_path);
 
-    return realpath($rel_path);
+    // test if the
+    if (str_starts_with(realpath($abs_path), realpath($share_path))) {
+        return $abs_path;
+    }
+    throw new Exception("specified path is not a sub path of share dir");
 }
 
 function format_bytes($bytes, $decimals = 2): string
