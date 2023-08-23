@@ -51,7 +51,7 @@ if (!file_exists($dir) || is_dir($dir)) {
     include_once 'index.php';
 
 } else {
-    $ctype = "text/plain"; //mime_content_type($dir);
+    $ctype = mime_content_type($dir);
 
     // required for IE, otherwise Content-disposition is ignored
     if(ini_get('zlib.output_compression'))
