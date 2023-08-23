@@ -99,5 +99,6 @@ foreach ($entries as $entry) {
 }
 
 if (count($entries) <= 2) {
+    echo '<div class="information">no files in here</div>';
     return;
 }
