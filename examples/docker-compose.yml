@@ -10,5 +10,10 @@ services:
         - ./repos.tsv:/srv/config/repos.tsv
         - ./.ignore:/srv/config/.ignore
       environment:
-        - OVERWRITE_URL=https://cdn.example.com
-        - OVERWRITE_SERVER_NAME=cdn.example.com
+        # should be setup if running behind reverse proxy
+        - OVERWRITE_URL = https://cdn.example.com
+        # these are all optional
+        - OVERWRITE_SERVER_NAME = cdn.example.com
+        - HOME_PAGE = https://home.example.com
+        - LEGAL_PAGE = https://home.example.com
+        - IMPRESSUM_PAGE = https://legal.example.com
