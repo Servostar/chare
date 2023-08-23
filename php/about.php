@@ -1,15 +1,12 @@
 <?php
 
-function create_target($path): string
+function amend_uri($amendment): string
 {
-    $filename = basename($path);
-    $target = $_SERVER['REQUEST_URI'].DIRECTORY_SEPARATOR.$filename;
-    return filter_var($target, FILTER_SANITIZE_URL);
+    return $_SERVER['REQUEST_URI'].DIRECTORY_SEPARATOR.$amendment;
 }
 
 $html = '';
 
-$aboutfile = $GLOBALS["description"];
 $dir = current_dir();
 
 $giturl = exec("git -C $dir config --get remote.origin.url 2>&1");
@@ -20,29 +17,30 @@ if (!empty($giturl)) {
             </a>';
 }
 
-if ($GLOBALS["license"] !== "NOLICENSE") {
-    $html .= '<a class="about-info" href="'.create_target($GLOBALS["license"]).'">
+if (!empty($GLOBALS["license"])) {
+    $html .= '<a class="about-info" href="'.create_link_from_uri(amend_uri($GLOBALS["license"])).'">
                 <i class="fa fa-regular fa-copyright fa-width"></i>
                 License
             </a>';
 }
 
-if ($GLOBALS["readme"] !== "NOREADME") {
-    $html .= '<a class="about-info" href="'.create_target($GLOBALS["readme"]).'">
+if (!empty($GLOBALS["readme"])) {
+    $html .= '<a class="about-info" href="'.create_link_from_uri(amend_uri($GLOBALS["readme"])).'">
                 <i class="fa fa-brands fa-readme fa-width"></i>
                 Readme
             </a>';
 }
 
-if ($GLOBALS["coc"] !== "NOCOC") {
-    $html .= '<a class="about-info" href="'.create_target($GLOBALS["coc"]).'">
+if (!empty($GLOBALS["coc"])) {
+    $html .= '<a class="about-info" href="'.create_link_from_uri(amend_uri($GLOBALS["coc"])).'">
                 <i class="fa fa-regular fa-handshake fa-width"></i>
                 Code of Conduct
             </a>';
 }
 
 $description = false;
-if ($aboutfile !== "NODESCRIPTION") {
+$aboutfile = $GLOBALS["description"];
+if (!empty($aboutfile)) {
 
     $fileHandle = fopen($aboutfile, 'r');
 

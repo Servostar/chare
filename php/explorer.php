@@ -35,7 +35,8 @@ function get_last_accesstime($file): string
 function format_file_entry_html($target_path, $filename, $filesize, $editdate, $iconclass, $colorclass): void
 {
     echo '<a class="folder-view-item" href="' . $target_path . '">
-                            <div class="file-name"><i class="file-icon '.$iconclass." ".$colorclass.'"></i>' . $filename . '</div>
+                            <i class="file-icon '.$iconclass." ".$colorclass.'"></i>
+                            <div class="file-name">' . $filename . '</div>
                             <div class="file-added">' . $editdate . '</div>
                             <div class="file-size">' . $filesize . '</div>
                         </a>';
@@ -45,11 +46,6 @@ $dir = current_dir();
 if ($dir === false) {
     return;
 }
-
-$GLOBALS["description"] = "NODESCRIPTION";
-$GLOBALS["readme"] = "NOREADME";
-$GLOBALS["license"] = "NOLICENSE";
-$GLOBALS["coc"] = "NOCOC";
 
 $ignore = explode("\n", read_file_or_default("/srv/config/.ignore", "."));
 

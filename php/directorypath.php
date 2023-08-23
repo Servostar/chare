@@ -5,7 +5,7 @@ include_once "common.php";
 $path = file_uri();
 $directories = explode("/", trim($path));
 
-echo '<a class="directory-segment" id="root-segment" href="/files"><i class="fa fa-solid fa-house"></i></a>';
+echo '<a class="directory-segment" id="root-segment" href="/files">'.getenv("OVERWRITE_SERVER_NAME").'</a>';
 
 $url = "/files";
 $path_trace = __get_share_path();

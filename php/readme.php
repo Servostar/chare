@@ -6,29 +6,53 @@ require __DIR__ . '/vendor/autoload.php';
 use League\CommonMark\CommonMarkConverter;
 use League\CommonMark\Exception\CommonMarkException;
 
-$readmefile = $GLOBALS["readme"];
+function render_readme(): void
+{
+    $readmefile = $GLOBALS["readme"];
 
-if (is_null($readmefile) || $readmefile == "NOREADME") {
-    return;
+    // if there is no readme file don't render anything
+    if (empty($readmefile))
+        return;
+
+    /*
+     * Configuration for common mark for converting markdown
+     * into html
+     */
+    $config = [
+        'html_input' => 'escape',
+        'allow_unsafe_links' => false,
+        'max_nesting_level' => 5
+    ];
+
+    $fileHandle = fopen($readmefile, 'r');
+    if ($fileHandle === false) {
+        $content = '<div class="error">Could not open README file</div>';
+    } else {
+        $size = filesize($readmefile);
+
+        // if the size is zero or cannot be determined
+        // $content will be empty and nothing will be rendered
+        if (!empty($size) && $size > 0) {
+            $text = fread($fileHandle, $size);
+
+            if ($text === false) {
+                $content = '<div class="error">Could not read README</div>';
+            } else {
+                try {
+                    // convert markdown into html
+                    $converter = new CommonMarkConverter($config);
+                    $content = $converter->convert($text);
+                } catch (CommonMarkException) {
+                    $content = '<div class="error">Could not render README</div>';
+                }
+            }
+        }
+        fclose($fileHandle);
+    }
+
+    if (!empty($content)) {
+        echo '<div id="readme-title">Readme</div><div id="readme">' . $content . '</div>';
+    }
 }
 
-$fileHandle = fopen($readmefile, 'r');
-if ($fileHandle === false) {
-    echo '<div class="error">Could not open README</div>';
-    return;
-}
-
-$text = fread($fileHandle, filesize($readmefile));
-if ($text === false) {
-    echo '<div class="error">Could not read README</div>';
-    return;
-}
-fclose($fileHandle);
-
-$converter = new CommonMarkConverter(['html_input' => 'escape', 'allow_unsafe_links' => false]);
-try {
-    $markdown = $converter->convert($text);
-    echo '<div id="readme-title">Readme</div><div id="readme">' . $markdown . '</div>';
-} catch (CommonMarkException $e) {
-    echo '<div class="error">Could not render README</div>';
-}
+render_readme();
