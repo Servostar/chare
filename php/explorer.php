@@ -2,9 +2,97 @@
 
 include_once 'common.php';
 
+class Explorer {
+
+    public $dir;
+    public $files;
+    public $urls;
+    public $filecount;
+    public $foldercount;
+    public $sizetotal;
+    public $isdirvalid;
+
+    public function __construct()
+    {
+        try {
+            $this->dir = current_dir();
+            $this->isdirvalid = true;
+        } catch (Exception) {
+            $this->isdirvalid = false;
+        }
+        $this->urls = array();
+        $this->files = array();
+        $this->index();
+    }
+
+    private function index(): void
+    {
+        if (!$this->isdirvalid) {
+            return;
+        }
+
+        $dir = $this->dir;
+
+        $files = scandir($dir);
+        usort($files, function ($a, $b) use ($dir) {
+            $aIsDir = is_dir($dir . DIRECTORY_SEPARATOR . $a);
+            $bIsDir = is_dir($dir . DIRECTORY_SEPARATOR . $b);
+            if ($aIsDir == $bIsDir) {
+                return strcasecmp($a, $b);
+            } else {
+                return $aIsDir ? -1 : 1;
+            }
+        });
+
+        $is_root = is_root();
+        $ignore = explode("\n", read_file_or_default("/srv/config/.ignore", "."));
+        $urlmatches = array(
+            "readme" => '/^readme(\.txt|\.md)?$/i',
+            "license" => '/^license(\.txt|\.md)?$/i',
+            "description" => '/^about(\.txt)?$/i',
+            "codeofconduct" => '/^code_?of_?conduct(\.txt|\.md)?$/i',
+        );
+
+        foreach ($files as $filename) {
+
+            if (in_array($filename, $ignore) || $is_root && $filename == "..") {
+                continue;
+            }
+
+            $filepath = $this->dir . DIRECTORY_SEPARATOR . $filename;
+
+            if (is_dir($filepath)) {
+                $this->filecount ++;
+            } else {
+                $this->foldercount ++;
+            }
+            $this->sizetotal += filesize_recursive($filepath);
+
+            foreach($urlmatches as $name => $regex) {
+                if (preg_match($regex, $filename)) {
+                    $this->urls[$name] = $filepath;
+                }
+            }
+
+            $this->files[] = $filepath;
+        }
+    }
+
+    public function generate_file_list(): void
+    {
+        foreach ($this->files as $file) {
+            create_file_html($file);
+        }
+
+        if (count($this->files) <= 2) {
+            echo '<div class="information">no files in here</div>';
+        }
+    }
+}
+
 function create_file_html($file): void
 {
-    $filesize = filesize_as_str($file);
+    $filesize = format_bytes(filesize_recursive($file));
     $filename = basename($file);
 
     $lastAccessTime = get_last_accesstime($file);
@@ -40,61 +128,4 @@ function format_file_entry_html($target_path, $filename, $filesize, $editdate, $
                             <div class="file-added">' . $editdate . '</div>
                             <div class="file-size">' . $filesize . '</div>
                         </a>';
-}
-
-$dir = current_dir();
-if ($dir === false) {
-    return;
-}
-
-$ignore = explode("\n", read_file_or_default("/srv/config/.ignore", "."));
-
-$entries = scandir($dir);
-sort($entries);
-usort($entries, function ($a, $b) use ($dir) {
-    $aIsDir = is_dir($dir . DIRECTORY_SEPARATOR . $a);
-    $bIsDir = is_dir($dir . DIRECTORY_SEPARATOR . $b);
-    if ($aIsDir == $bIsDir) {
-        return strcasecmp($a, $b);
-    } else {
-        return $aIsDir ? -1 : 1;
-    }
-});
-
-$is_root = is_root();
-
-foreach ($entries as $entry) {
-
-    if (in_array($entry, $ignore)) {
-        continue;
-    }
-
-    if ($is_root && $entry == "..") {
-        continue;
-    }
-
-    $file = current_dir() . DIRECTORY_SEPARATOR . $entry;
-
-    if (preg_match('/^readme(\.md)?$/i', $entry)) {
-        $GLOBALS["readme"] = $file;
-    }
-
-    if (preg_match('/^license(\.txt)?$/i', $entry)) {
-        $GLOBALS["license"] = $file;
-    }
-
-    if (preg_match('/^about(\.txt)?$/i', $entry)) {
-        $GLOBALS["description"] = $file;
-    }
-
-    if (preg_match('/^code_?of_?conduct(\.txt|\.md)?$/i', $entry)) {
-        $GLOBALS["coc"] = $file;
-    }
-
-    create_file_html($file);
-}
-
-if (count($entries) <= 2) {
-    echo '<div class="information">no files in here</div>';
-    return;
 }

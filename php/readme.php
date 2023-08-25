@@ -8,10 +8,10 @@ use League\CommonMark\Exception\CommonMarkException;
 
 function render_readme(): void
 {
-    $readmefile = $GLOBALS["readme"];
+    global $explorer;
 
     // if there is no readme file don't render anything
-    if (empty($readmefile))
+    if (empty($explorer->urls["readme"]))
         return;
 
     /*
@@ -24,11 +24,11 @@ function render_readme(): void
         'max_nesting_level' => 5
     ];
 
-    $fileHandle = fopen($readmefile, 'r');
+    $fileHandle = fopen($explorer->urls["readme"], 'r');
     if ($fileHandle === false) {
         $content = '<div class="error">Could not open README file</div>';
     } else {
-        $size = filesize($readmefile);
+        $size = filesize($explorer->urls["readme"]);
 
         // if the size is zero or cannot be determined
         // $content will be empty and nothing will be rendered

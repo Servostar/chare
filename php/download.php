@@ -1,14 +1,12 @@
 <?php
 
 include_once 'common.php';
-
-$dir = current_dir();
-
-$GLOBALS["request"] = $dir;
+include_once 'explorer.php';
 
 function downloadZIP()
 {
-    $dirPath = current_dir(); // Replace with the path to your directory
+    // current absolute path to directory
+    global $explorer;
 
     // Create a new ZipArchive object
     $zip = new ZipArchive();
@@ -19,14 +17,14 @@ function downloadZIP()
 
     // Add all files in the directory to the zip file
     $files = new RecursiveIteratorIterator(
-        new RecursiveDirectoryIterator($dirPath),
+        new RecursiveDirectoryIterator($explorer->dir),
         RecursiveIteratorIterator::LEAVES_ONLY
     );
 
     foreach ($files as $name => $file) {
         if (!$file->isDir()) {
             $filePath = $file->getRealPath();
-            $relativePath = substr($filePath, strlen($dirPath) + 1);
+            $relativePath = substr($filePath, strlen($explorer->dir) + 1);
             $zip->addFile($filePath, $relativePath);
         }
     }
@@ -36,7 +34,7 @@ function downloadZIP()
 
     // Prompt the user to download the zip file
     header('Content-Type: application/zip');
-    header('Content-Disposition: attachment; filename="' . basename($dirPath) . '"');
+    header('Content-Disposition: attachment; filename="' . basename($explorer->dir) . '"');
     header('Content-Length: ' . filesize($zipName));
     readfile($zipName);
 
@@ -44,20 +42,24 @@ function downloadZIP()
     unlink($zipName);
 }
 
-if (!file_exists($dir) || is_dir($dir)) {
-    if(isset($_POST['download-zip'])) {
+// current absolute path to directory
+global $explorer;
+$explorer = new Explorer();
+
+if (!file_exists($explorer->dir) || is_dir($explorer->dir)) {
+    if (isset($_POST['download-zip'])) {
         downloadZIP();
     }
+
     include_once 'index.php';
 
 } else {
-    $ctype = mime_content_type($dir);
+    $filename = basename($explorer->dir);
+    $ctype = mime_content_type($filename);
 
     // required for IE, otherwise Content-disposition is ignored
     if(ini_get('zlib.output_compression'))
         ini_set('zlib.output_compression', 'Off');
-
-    $filename = basename($dir);
 
     // Define header information
     header('Content-Description: File Transfer');
@@ -66,10 +68,10 @@ if (!file_exists($dir) || is_dir($dir)) {
     header('Expires: 0');
     header('Cache-Control: must-revalidate');
     header('Pragma: public');
-    header('Content-Length: ' . filesize($dir));
+    header('Content-Length: ' . filesize($explorer->dir));
     // Clear output buffer
     flush();
     // Read the file
-    readfile($dir);
+    readfile($explorer->dir);
     exit();
 }

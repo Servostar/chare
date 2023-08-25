@@ -1,5 +1,13 @@
 <?php
 
+global $dir;
+try {
+    $dir = current_dir();
+} catch (Exception $e) {
+    echo '<div class=".error">resolved path is not within public share</div>';
+    exit(1);
+}
+
 /**
  * Tests if the supplied environment variable ios invalid
  * @param bool|array|string $name
@@ -106,25 +114,22 @@ function format_bytes($bytes, $decimals = 2): string
     return sprintf("%.{$decimals}f", $bytes / pow(1024, $factor)) . ' ' . $size[$factor];
 }
 
-function filesize_as_str($file): string
+function filesize_recursive($file): int
 {
-    $size = filesize($file);
+    $size = 0;
+
     if (is_dir($file)) {
         $iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($file));
 
         foreach ($iterator as $rfile) {
-            if ($rfile->getFilename() === "..") {
-                continue;
-            }
             if ($rfile->isFile()) {
                 $size += filesize($rfile->getPathname());
             }
         }
+    } else {
+        $size = filesize($file);
     }
-    if ($size !== false) {
-        return format_bytes($size);
-    }
-    return "unknown";
+    return $size;
 }
 
 function pretty_datetime_diff($past): string
@@ -149,6 +154,9 @@ function pretty_datetime_diff($past): string
 
 function read_file_or_default($file, $default): string
 {
+    if (empty($file))
+        return $default;
+
     $text = $default;
     $fileHandle = fopen($file, 'r');
     if ($fileHandle !== false) {

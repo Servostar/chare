@@ -31,14 +31,17 @@
 
         <?php
         include_once "common.php";
+        include_once "explorer.php";
+
+        global $explorer;
 
         // if the folder does not exist, stop generating more
-        if ($GLOBALS["request"] === false) {
+        if (!$explorer->isdirvalid) {
             echo '<div class="error">directory not found: '.$_SERVER['REQUEST_URI'].'</div>';
             exit;
         }
 
-        if (count(scandir(current_dir())) > 2) {
+        if (count($explorer->files) > 2) {
             echo '<div id="folder-view-head">
                     <div id="download-zip-group">
                         <div id="download-zip-type">ZIP</div>
@@ -66,7 +69,10 @@
 
         <div id="folder-path">Content</div>
         <div id="folder-view">
-            <?php include_once 'explorer.php'; ?>
+            <?php
+                global $explorer;
+                $explorer->generate_file_list();
+            ?>
         </div>
         <?php include_once 'readme.php'; ?>
     </div>
