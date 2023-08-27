@@ -24,11 +24,12 @@ function render_readme(): void
         'max_nesting_level' => 5
     ];
 
-    $fileHandle = fopen($explorer->urls["readme"], 'r');
+    $readmefilepath = $explorer->dir . DIRECTORY_SEPARATOR . $explorer->urls["readme"];
+    $fileHandle = fopen($readmefilepath, 'r');
     if ($fileHandle === false) {
         $content = '<div class="error">Could not open README file</div>';
     } else {
-        $size = filesize($explorer->urls["readme"]);
+        $size = filesize($readmefilepath);
 
         // if the size is zero or cannot be determined
         // $content will be empty and nothing will be rendered

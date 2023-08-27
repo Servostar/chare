@@ -9,8 +9,11 @@ $html = '';
 
 global $explorer;
 
-$giturl = exec("git -C $explorer->dir config --get remote.origin.url 2>&1");
-if (!empty($giturl)) {
+$output = null;
+$return_var = null;
+exec("/usr/bin/git -C $explorer->dir config --get remote.origin.url 2>&1", $output, $return_var);
+$giturl = trim($output[0]);
+if ($return_var === 0 && !empty($giturl)) {
     $html .= '<a class="about-info" href="'.$giturl.'">
                 <i class="fa fa-brands fa-git-alt fa-width"></i>
                 Git Repository

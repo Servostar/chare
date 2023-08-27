@@ -55,7 +55,7 @@ if (!file_exists($explorer->dir) || is_dir($explorer->dir)) {
 
 } else {
     $filename = basename($explorer->dir);
-    $ctype = mime_content_type($filename);
+    $ctype = mime_content_type($explorer->dir);
 
     // required for IE, otherwise Content-disposition is ignored
     if(ini_get('zlib.output_compression'))

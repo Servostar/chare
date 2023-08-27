@@ -22,7 +22,12 @@ class Explorer {
         }
         $this->urls = array();
         $this->files = array();
-        $this->index();
+
+        if (!is_dir($this->dir)) {
+            $this->isdirvalid = false;
+        } else {
+            $this->index();
+        }
     }
 
     private function index(): void
@@ -70,7 +75,7 @@ class Explorer {
 
             foreach($urlmatches as $name => $regex) {
                 if (preg_match($regex, $filename)) {
-                    $this->urls[$name] = $filepath;
+                    $this->urls[$name] = $filename;
                 }
             }
 
