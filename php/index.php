@@ -41,7 +41,7 @@
             exit;
         }
 
-        if (count($explorer->files) > 2) {
+        if (count($explorer->files) == 1 && $explorer->files[0] === '..') {
             echo '<div id="folder-view-head">
                     <div id="download-zip-group">
                         <div id="download-zip-type">ZIP</div>
