@@ -13,7 +13,7 @@ function downloadZIP()
 
     // Create a new zip file with a random name
     $zipName = tempnam(sys_get_temp_dir(), 'zip');
-    $zip->open($zipName, ZipArchive::CREATE);
+    $zip->open($zipName, ZipArchive::CREATE | ZipArchive::OVERWRITE);
 
     // Add all files in the directory to the zip file
     $files = new RecursiveIteratorIterator(
