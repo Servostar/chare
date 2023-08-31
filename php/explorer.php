@@ -57,6 +57,9 @@ class Explorer {
             "description" => '/^about(\.txt)?$/i',
             "codeofconduct" => '/^code_?of_?conduct(\.txt|\.md)?$/i',
         );
+        foreach($urlmatches as $name => $regex) {
+            $this->urls[$name] = false;
+        }
 
         foreach ($files as $filename) {
 
@@ -89,7 +92,7 @@ class Explorer {
             create_file_html($file);
         }
 
-        if (count($this->files) <= 2) {
+        if (count($this->files) == 1 && $this->files[0] === '..') {
             echo '<div class="information">no files in here</div>';
         }
     }
@@ -105,11 +108,18 @@ function create_file_html($file): void
     $uri = preg_replace("/\/+/", '/', $_SERVER['REQUEST_URI'].DIRECTORY_SEPARATOR.$filename);
     $url = create_link_from_uri($uri);
 
-    if (is_dir($file)) {
-        format_file_entry_html($url, $filename, $filesize, $lastAccessTime, "fa fa-solid fa-folder-blank", "accent");
-    } else {
-        format_file_entry_html($url, $filename, $filesize, $lastAccessTime, "fa fa-regular fa-file", "");
+    $iconclass = "fa fa-regular fa-file";
+    $colorclass = "";
+
+    if ($filename === "..") {
+        $iconclass = "fa fa-solid fa-arrow-up-from-bracket";
+        $colorclass = "accent";
+    } else if (is_dir($file)) {
+        $iconclass = "fa fa-solid fa-folder-blank";
+        $colorclass = "accent";
     }
+
+    format_file_entry_html($url, $filename, $filesize, $lastAccessTime, $iconclass, $colorclass);
 }
 
 function get_last_accesstime($file): string
