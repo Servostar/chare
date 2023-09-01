@@ -92,7 +92,7 @@ class Explorer {
             create_file_html($file);
         }
 
-        if (count($this->files) == 1 && $this->files[0] === '..') {
+        if (count($this->files) == 0 || count($this->files) == 1 && $this->files[0] === '..') {
             echo '<div class="information">no files in here</div>';
         }
     }

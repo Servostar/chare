@@ -41,7 +41,7 @@
             exit;
         }
 
-        if (count($explorer->files) != 1 || $explorer->files[0] !== '..') {
+        if (count($explorer->files) != 0 && (count($explorer->files) != 1 || $explorer->files[0] !== '..')) {
             echo '<div id="folder-view-head">
                     <div id="download-zip-group">
                         <div id="download-zip-type">ZIP</div>
@@ -63,9 +63,7 @@
         }
         ?>
 
-        <div id="stats-group">
-            <?php include_once 'statistics.php'; ?>
-        </div>
+        <?php include_once 'statistics.php'; ?>
 
         <div id="folder-path">Content</div>
         <div id="folder-view">

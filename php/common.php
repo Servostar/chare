@@ -109,8 +109,15 @@ function current_dir(): false|string
 
 function format_bytes($bytes, $decimals = 2): string
 {
+    if (empty($bytes))
+        return "0B";
+
     $size = array('B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB');
     $factor = floor((strlen($bytes) - 1) / 3);
+
+    if ($factor < 0 || $factor > 8)
+        return "0B";
+
     return sprintf("%.{$decimals}f", $bytes / pow(1024, $factor)) . ' ' . $size[$factor];
 }
 
