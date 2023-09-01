@@ -4,7 +4,7 @@ log() {
     local level=$1
     local message=$2
     local timestamp=$(date +"%Y-%m-%d %T")
-    echo "[$timestamp] [$level] $message" >> logfile.txt
+    echo "[$timestamp] [$level] $message"
 }
 
 function sync_git() {
@@ -25,11 +25,11 @@ function sync() {
 
     log "syncing..."
 
-    while read line; do
+    while read -r line; do
       IFS=' ' read -ra words <<< "$line"
 
-      if [ "${#words[@]}" -lt 3 ]; then
-        log "invalid amount of arguments"
+      if [ "${#words[@]}" -ne 3 ]; then
+        log "invalid amount of arguments: $line"
         continue
       fi
 
