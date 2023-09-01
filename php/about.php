@@ -9,6 +9,15 @@ $html = '';
 
 global $explorer;
 
+$giturl = exec("git -C $explorer->dir config --get remote.origin.url 2>&1");
+if (!empty($giturl)) {
+    $html .= '<a class="about-info" href="'.$giturl.'">
+                <i class="fa fa-brands fa-git-alt fa-width"></i>
+                <i class="fa fa-brands fa-git-alt fa-width"></i>
+                Git Repository
+        </a>';
+}
+
 if (!empty($explorer->urls["license"])) {
     $html .= '<a class="about-info" href="'.create_link_from_uri(amend_uri($explorer->urls["license"])).'">
                 <i class="fa fa-regular fa-copyright fa-width"></i>
