@@ -202,7 +202,6 @@ html, body {
 
 .file-name:hover {
     text-decoration: underline;
-    color: var(--accent-color);
 }
 
 .file-added {

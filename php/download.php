@@ -34,7 +34,7 @@ function downloadZIP()
 
     // Prompt the user to download the zip file
     header('Content-Type: application/zip');
-    header('Content-Disposition: attachment; filename="' . basename($explorer->dir) . '"');
+    header('Content-Disposition: attachment; filename="' . basename($explorer->dir) . '.zip"');
     header('Content-Length: ' . filesize($zipName));
     readfile($zipName);
 
