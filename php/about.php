@@ -9,10 +9,9 @@ $html = '';
 
 global $explorer;
 
-$giturl = exec("git -C $explorer->dir config --get remote.origin.url 2>&1");
+$giturl = exec("git -C $explorer->dir remote -v | grep -oE https:\\/\\/\\\\S+");
 if (!empty($giturl)) {
     $html .= '<a class="about-info" href="'.$giturl.'">
-                <i class="fa fa-brands fa-git-alt fa-width"></i>
                 <i class="fa fa-brands fa-git-alt fa-width"></i>
                 Git Repository
         </a>';

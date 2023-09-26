@@ -15,6 +15,8 @@ function sync_git() {
       mkdir -p "$2"
       git clone "$1" "$2"
     fi
+    echo "changing ownership of repository..."
+    chown -R nginx "$2"
 }
 
 function sync() {
