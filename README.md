@@ -20,6 +20,28 @@ Demo site can be visited at: [demo](https://cdn.montehaselino.de)
 ## Deployment
 The recommended way is to run chare as docker container: `docker run servostar/chare -p 80:80`.
 An example configuration via docker compose can be found in the `example` folder.
+Example docker-compose:
+```yaml
+version: "3.1"
+services:
+  chare:
+      image: servostar/chare:latest
+      restart: unless-stopped
+      ports:
+        - "8080:80"
+      volumes:
+        - ./public:/var/share
+        - ./repos.tsv:/srv/config/repos.tsv
+        - ./.ignore:/srv/config/.ignore
+      environment:
+        # should be setup if running behind reverse proxy
+        - OVERWRITE_URL = https://cdn.example.com
+        # these are all optional
+        - OVERWRITE_SERVER_NAME = cdn.example.com
+        - HOME_PAGE = https://home.example.com
+        - LEGAL_PAGE = https://home.example.com
+        - IMPRESSUM_PAGE = https://legal.example.com
+```
 ## Dependencies for manual install
 If installing manually chare requires php 6.0+ and the package manager compose for downloading plugins.
 `curl` and `git` should also be available.
