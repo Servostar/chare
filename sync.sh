@@ -10,6 +10,7 @@ log() {
 function sync_git() {
     if [ -d "$2" ]; then
       cd "$2" || return
+      git config --global --add safe.directory "$2"
       git pull "$1"
     else
       mkdir -p "$2"
